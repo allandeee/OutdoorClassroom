@@ -1,5 +1,6 @@
 package com.outdoorclassroom;
 
+import android.content.res.AssetManager;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.support.v4.app.FragmentActivity;
@@ -23,6 +24,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -47,6 +49,43 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mapFragment.getMapAsync(this);
     }
 
+    public Walk readCsvCoord () {
+
+        Walk walk = new Walk ();
+
+        try {
+            AssetManager am = getAssets();
+            InputStream is = am.open("EHHWv2.csv");
+            BufferedReader br = new BufferedReader(
+                    new InputStreamReader(is, Charset.forName("UTF-8"))
+            );
+
+            String line = "";
+            br.readLine();
+
+            //for start and end
+            line = br.readLine();
+            String[] tokens = line.split(",");
+            LatLng start = new LatLng(Double.parseDouble(tokens[1]),Double.parseDouble(tokens[2]));
+            walk.setStart(start);
+
+            LatLng waypoint = new LatLng(-33.802222, 151.286979);
+
+            while ( (line = br.readLine()) != null) {
+                tokens = line.split(",");
+
+                waypoint = new LatLng(Double.parseDouble(tokens[1]),Double.parseDouble(tokens[2]));
+                walk.addWpt(waypoint);
+            }
+
+            walk.removeLastWpt();
+            walk.setEnd(waypoint);
+
+        } catch (Exception e) {
+            Log.d("CSV Reader Task", e.toString());
+        }
+        return walk;
+    }
 
     /**
      * Manipulates the map once available.
@@ -69,19 +108,17 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap.setMaxZoomPreference(20.0f);
 
         // function to pass coordinates to onMapPoints
-        parseCoord();
+
+        Walk eHills = readCsvCoord();
+        parseCoord(eHills);
 
         // function for onMapPoints
     }
 
-    private void parseCoord () {
-        LatLng eEsplanade = new LatLng(-33.802222, 151.286979);
-        LatLng sSteyne = new LatLng(-33.797286, 151.288127);
-
-        Walk eHill = new Walk(eEsplanade, sSteyne);
+    private void parseCoord (Walk walk) {
 
         //will implement loop for each walk
-        onMapPoints(eEsplanade, sSteyne);
+        onMapPoints(walk.getStart(), walk.getEnd());
     }
 
     //will implement overloaded onMapPoints function with parameters for waypoints
@@ -154,22 +191,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         return markerOptions;
     }
 
-    private class Walk {
-        LatLng start;
-        LatLng end;
-        ArrayList wpts;
 
-        public Walk (LatLng st, LatLng en) {
-            start = st;
-            end = en;
-        }
-
-        public Walk (LatLng st, LatLng en, ArrayList wp) {
-            start = st;
-            end = en;
-            wpts = new ArrayList(wp);
-        }
-    }
 
     private class DownloadTask extends AsyncTask <String, Void, String> {
 
