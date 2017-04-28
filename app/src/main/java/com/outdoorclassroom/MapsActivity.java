@@ -29,11 +29,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import jxl.Cell;
-import jxl.NumberCell;
-import jxl.Sheet;
-import jxl.Workbook;
-
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
@@ -89,58 +84,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         } catch (Exception e) {
             Log.d("CSV Reader Task", e.toString());
         }
-        return walk;
-    }
-
-    public Walk readXlsCoord () {
-        Walk walk = new Walk ();
-        try {
-
-            AssetManager am = getAssets();
-            InputStream is = am.open("EHHW.xls");
-            Workbook wb = Workbook.getWorkbook(is);
-            Sheet sh = wb.getSheet(0);
-            int rowSize = 17;
-            //int colSize = sh.getColumns()-2;    // = 3
-
-            Log.d("XLS Reader Task", Integer.toString(rowSize));
-
-            //get starting LatLng; origin
-            Cell left = sh.getCell(1,1);
-            Cell right = sh.getCell(2,1);
-
-            Log.d("XLS Reader Task", left.getContents());
-            Log.d("XLS Reader Task", right.getContents());
-
-            //get ending LatLng; destination
-            Cell endLeft = sh.getCell(1,rowSize-1);
-            Cell endRight = sh.getCell(2,rowSize-1);    //rowSize-1 points to last item in row
-
-            Log.d("XLS Reader Task", endLeft.getContents());
-            Log.d("XLS Reader Task", endRight.getContents());
-
-            //LatLng conversion of the cell values in xls
-            LatLng start = new LatLng(Double.parseDouble(left.getContents()),Double.parseDouble(right.getContents()));
-            LatLng end = new LatLng(Double.parseDouble(endLeft.getContents()),Double.parseDouble(endRight.getContents()));
-
-            //walk = new Walk(start, end);
-            walk.setStart(start);
-            walk.setEnd(end);
-
-            int rStart = 2;
-            int cStart = 1;
-
-            for (int r=rStart; r<rowSize-1; r++) {
-                left = sh.getCell(cStart,r);
-                right = sh.getCell(cStart+1,r);
-                LatLng waypoint = new LatLng(Double.parseDouble(left.getContents()),Double.parseDouble(right.getContents()));
-                walk.addWpt(waypoint);
-                Log.d("XLS Reader Task", left.getContents());
-            }
-        } catch (Exception e) {
-            Log.d("XLS Reader Task", e.toString());
-        }
-
         return walk;
     }
 
