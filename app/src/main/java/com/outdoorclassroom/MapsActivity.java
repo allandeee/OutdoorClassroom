@@ -1,5 +1,6 @@
 package com.outdoorclassroom;
 
+import android.content.res.AssetManager;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.support.v4.app.FragmentActivity;
@@ -23,9 +24,15 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
+import jxl.Cell;
+import jxl.NumberCell;
+import jxl.Sheet;
+import jxl.Workbook;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
@@ -47,6 +54,95 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mapFragment.getMapAsync(this);
     }
 
+    public Walk readCsvCoord () {
+
+        Walk walk = new Walk ();
+
+        try {
+            AssetManager am = getAssets();
+            InputStream is = am.open("EHHWv2.csv");
+            BufferedReader br = new BufferedReader(
+                    new InputStreamReader(is, Charset.forName("UTF-8"))
+            );
+
+            String line = "";
+            br.readLine();
+
+            //for start and end
+            line = br.readLine();
+            String[] tokens = line.split(",");
+            LatLng start = new LatLng(Double.parseDouble(tokens[1]),Double.parseDouble(tokens[2]));
+            walk.setStart(start);
+
+            LatLng waypoint = new LatLng(-33.802222, 151.286979);
+
+            while ( (line = br.readLine()) != null) {
+                tokens = line.split(",");
+
+                waypoint = new LatLng(Double.parseDouble(tokens[1]),Double.parseDouble(tokens[2]));
+                walk.addWpt(waypoint);
+            }
+
+            walk.removeLastWpt();
+            walk.setEnd(waypoint);
+
+        } catch (Exception e) {
+            Log.d("CSV Reader Task", e.toString());
+        }
+        return walk;
+    }
+
+    public Walk readXlsCoord () {
+        Walk walk = new Walk ();
+        try {
+
+            AssetManager am = getAssets();
+            InputStream is = am.open("EHHW.xls");
+            Workbook wb = Workbook.getWorkbook(is);
+            Sheet sh = wb.getSheet(0);
+            int rowSize = 17;
+            //int colSize = sh.getColumns()-2;    // = 3
+
+            Log.d("XLS Reader Task", Integer.toString(rowSize));
+
+            //get starting LatLng; origin
+            Cell left = sh.getCell(1,1);
+            Cell right = sh.getCell(2,1);
+
+            Log.d("XLS Reader Task", left.getContents());
+            Log.d("XLS Reader Task", right.getContents());
+
+            //get ending LatLng; destination
+            Cell endLeft = sh.getCell(1,rowSize-1);
+            Cell endRight = sh.getCell(2,rowSize-1);    //rowSize-1 points to last item in row
+
+            Log.d("XLS Reader Task", endLeft.getContents());
+            Log.d("XLS Reader Task", endRight.getContents());
+
+            //LatLng conversion of the cell values in xls
+            LatLng start = new LatLng(Double.parseDouble(left.getContents()),Double.parseDouble(right.getContents()));
+            LatLng end = new LatLng(Double.parseDouble(endLeft.getContents()),Double.parseDouble(endRight.getContents()));
+
+            //walk = new Walk(start, end);
+            walk.setStart(start);
+            walk.setEnd(end);
+
+            int rStart = 2;
+            int cStart = 1;
+
+            for (int r=rStart; r<rowSize-1; r++) {
+                left = sh.getCell(cStart,r);
+                right = sh.getCell(cStart+1,r);
+                LatLng waypoint = new LatLng(Double.parseDouble(left.getContents()),Double.parseDouble(right.getContents()));
+                walk.addWpt(waypoint);
+                Log.d("XLS Reader Task", left.getContents());
+            }
+        } catch (Exception e) {
+            Log.d("XLS Reader Task", e.toString());
+        }
+
+        return walk;
+    }
 
     /**
      * Manipulates the map once available.
@@ -69,19 +165,17 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap.setMaxZoomPreference(20.0f);
 
         // function to pass coordinates to onMapPoints
-        parseCoord();
+
+        Walk eHills = readCsvCoord();
+        parseCoord(eHills);
 
         // function for onMapPoints
     }
 
-    private void parseCoord () {
-        LatLng eEsplanade = new LatLng(-33.802222, 151.286979);
-        LatLng sSteyne = new LatLng(-33.797286, 151.288127);
-
-        Walk eHill = new Walk(eEsplanade, sSteyne);
+    private void parseCoord (Walk walk) {
 
         //will implement loop for each walk
-        onMapPoints(eEsplanade, sSteyne);
+        onMapPoints(walk.getStart(), walk.getEnd());
     }
 
     //will implement overloaded onMapPoints function with parameters for waypoints
@@ -155,19 +249,50 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
     private class Walk {
-        LatLng start;
-        LatLng end;
-        ArrayList wpts;
+        private LatLng start;
+        private LatLng end;
+        private ArrayList wpts;
+
+        public Walk () {
+            start = new LatLng(-33.852,151.211);
+            end = new LatLng(-33.852,151.211);
+            wpts = new ArrayList();
+        }
 
         public Walk (LatLng st, LatLng en) {
             start = st;
             end = en;
+            wpts = new ArrayList();
         }
 
         public Walk (LatLng st, LatLng en, ArrayList wp) {
             start = st;
             end = en;
             wpts = new ArrayList(wp);
+        }
+
+        public void addWpt (LatLng latLng) {
+            wpts.add(latLng);
+        }
+
+        public LatLng getStart () {
+            return start;
+        }
+
+        public LatLng getEnd() {
+            return end;
+        }
+
+        public void setStart (LatLng start) {
+            this.start = start;
+        }
+
+        public void setEnd(LatLng end) {
+            this.end = end;
+        }
+
+        public void removeLastWpt () {
+            wpts.remove(wpts.size()-1);
         }
     }
 
