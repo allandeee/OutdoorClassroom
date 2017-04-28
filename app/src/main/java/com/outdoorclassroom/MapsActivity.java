@@ -78,6 +78,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         LatLng eEsplanade = new LatLng(-33.802222, 151.286979);
         LatLng sSteyne = new LatLng(-33.797286, 151.288127);
 
+        Walk eHill = new Walk(eEsplanade, sSteyne);
+
         //will implement loop for each walk
         onMapPoints(eEsplanade, sSteyne);
     }
@@ -150,6 +152,23 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
 
         return markerOptions;
+    }
+
+    private class Walk {
+        LatLng start;
+        LatLng end;
+        ArrayList wpts;
+
+        public Walk (LatLng st, LatLng en) {
+            start = st;
+            end = en;
+        }
+
+        public Walk (LatLng st, LatLng en, ArrayList wp) {
+            start = st;
+            end = en;
+            wpts = new ArrayList(wp);
+        }
     }
 
     private class DownloadTask extends AsyncTask <String, Void, String> {
