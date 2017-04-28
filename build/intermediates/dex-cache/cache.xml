@@ -291,15 +291,6 @@
     </item>
     <item
         is-multidex="true"
-        jar="C:\Users\Allan\AndroidStudioProjects\OutdoorClassroom\app\libs\jxl.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.0"
-        sha1="7faf62e0697f7a88954622dfe8c8de33ed142ac7">
-        <dex dex="C:\Users\Allan\AndroidStudioProjects\OutdoorClassroom\app\build\intermediates\transforms\dex\debug\folders\1000\2\jxl_2b666811757ffdffd7064104b13bf1410c8cbbcb\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
         jar="C:\Users\Allan\.android\build-cache\e9bfe102ed298049751b9d3ad35a1f18e13086eb\output\jars\classes.jar"
         jumboMode="true"
         optimize="true"
