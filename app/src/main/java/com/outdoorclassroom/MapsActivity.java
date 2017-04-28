@@ -34,6 +34,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     //2-dimensional array, containing array of walks
     ArrayList walks = new ArrayList();
 
+    //Colour counter for markers and polylines
+    int cCOUNT = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -105,8 +108,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         startOpt.position(start);
         endOpt.position(end);
 
-        startOpt.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE));
-        endOpt.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE));
+        startOpt = markerSetup(startOpt);
+        endOpt = markerSetup(endOpt);
 
         mMap.addMarker(startOpt);
         mMap.addMarker(endOpt);
@@ -125,6 +128,28 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             downloadTask.execute(url);
         }
 
+        //don't increment cCOUNT, should only be done ONCE at ParserTask when drawing polyline
+
+    }
+
+    private MarkerOptions markerSetup (MarkerOptions markerOptions) {
+
+        switch (cCOUNT) {
+            case 0:
+                markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE));
+                break;
+            case 1:
+                markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
+                break;
+            case 2:
+                markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
+                break;
+            default:
+                markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
+                break;
+        }
+
+        return markerOptions;
     }
 
     private class DownloadTask extends AsyncTask <String, Void, String> {
@@ -196,13 +221,35 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 }
 
                 lineOptions.addAll(points);
-                lineOptions.width(12);
-                lineOptions.color(Color.RED);
-                lineOptions.geodesic(true);
+                lineOptions = lineSetup(lineOptions);
             }
 
             mMap.addPolyline(lineOptions);
+            cCOUNT++;
         }
+    }
+
+    private PolylineOptions lineSetup (PolylineOptions lineOptions) {
+
+        lineOptions.width(12);
+        lineOptions.geodesic(true);
+
+        switch (cCOUNT) {
+            case 0:
+                lineOptions.color(Color.rgb(255,165,0));
+                break;
+            case 1:
+                lineOptions.color(Color.BLUE);
+                break;
+            case 2:
+                lineOptions.color(Color.GREEN);
+                break;
+            default:
+                lineOptions.color(Color.RED);
+                break;
+        }
+
+        return lineOptions;
     }
 
     private String downloadUrl(String strUrl) throws IOException {
