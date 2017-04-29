@@ -146,7 +146,6 @@
     <orderEntry type="library" exported="" name="play-services-identity-9.8.0" level="project" />
     <orderEntry type="library" exported="" name="play-services-maps-9.8.0" level="project" />
     <orderEntry type="library" exported="" name="firebase-storage-common-9.8.0" level="project" />
-    <orderEntry type="library" exported="" name="jxl" level="project" />
     <orderEntry type="library" exported="" name="support-annotations-25.0.1" level="project" />
     <orderEntry type="library" exported="" name="play-services-iid-9.8.0" level="project" />
     <orderEntry type="library" exported="" name="play-services-9.8.0" level="project" />

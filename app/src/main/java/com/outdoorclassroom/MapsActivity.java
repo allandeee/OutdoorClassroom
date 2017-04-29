@@ -35,6 +35,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     //2-dimensional array, containing array of walks
     ArrayList walks = new ArrayList();
+    //replacer for above walks
+    ArrayList<Walk> routes = new ArrayList<>();
 
     //Colour counter for markers and polylines
     int cCOUNT = 0;
@@ -55,7 +57,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         try {
             AssetManager am = getAssets();
-            InputStream is = am.open("EHHWv2.csv");
+            InputStream is = am.open("testwalksmall.csv");  //error for EHHWv2.csv
             BufferedReader br = new BufferedReader(
                     new InputStreamReader(is, Charset.forName("UTF-8"))
             );
@@ -118,10 +120,47 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private void parseCoord (Walk walk) {
 
         //will implement loop for each walk
-        onMapPoints(walk.getStart(), walk.getEnd());
+        onMapPoints(walk);
     }
 
     //will implement overloaded onMapPoints function with parameters for waypoints
+    public void onMapPoints (Walk walk) {
+
+        //limiter to how many walks are on the map
+        if (routes.size() > 1) {
+            routes.clear();
+            mMap.clear();
+        }
+
+        //use Walk object arg
+
+        //add Walk object to all routes/walks
+        routes.add(walk);
+
+        //instantiate Marker options for start and end markers
+        MarkerOptions startOpt = new MarkerOptions();
+        MarkerOptions endOpt = new MarkerOptions();
+        startOpt.position(walk.getStart());
+        endOpt.position(walk.getEnd());
+        //retrieve marker settings
+        startOpt = markerSetup(startOpt);
+        endOpt = markerSetup(endOpt);
+
+        mMap.addMarker(startOpt);
+        mMap.addMarker(endOpt);
+
+        if (routes.size() >= 1) {
+            LatLng origin = walk.getStart();
+            LatLng dest = walk.getEnd();
+
+            //Getting URL to the Google Directions API
+            String url = getDirectionsUrl(origin,dest,walk);
+
+            //Download json data from Google Directions API
+            DownloadTask downloadTask = new DownloadTask();
+            downloadTask.execute(url);
+        }
+    }
 
     //plots start and end of a walk, sends HTTP request for directions
     public void onMapPoints (LatLng start, LatLng end) {
@@ -160,11 +199,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             LatLng dest = walk.get(1);
 
             //Getting URL to the Google Directions API
-            String url = getDirectionsUrl(origin,dest);
+            //String url = getDirectionsUrl(origin,dest);
 
             //Download json data from Google Directions API
             DownloadTask downloadTask = new DownloadTask();
-            downloadTask.execute(url);
+            //downloadTask.execute(url);
         }
 
         //don't increment cCOUNT, should only be done ONCE at ParserTask when drawing polyline
@@ -220,6 +259,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     private class ParserTask extends AsyncTask <String, Integer, List<List<HashMap<String, String>>>> {
 
+
         // parsing data in non-ui thread
         @Override
         protected List<List<HashMap<String, String>>> doInBackground(String... jsonData) {
@@ -262,6 +302,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 }
 
                 lineOptions.addAll(points);
+                //lineOptions.add(new LatLng(-33.802222,151.286979), new LatLng(-33.81528,151.285724));
                 lineOptions = lineSetup(lineOptions);
             }
 
@@ -325,15 +366,31 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         return data;
     }
 
-    private String getDirectionsUrl (LatLng origin, LatLng dest) {
+    private String getDirectionsUrl (LatLng origin, LatLng dest, Walk walk) {
 
         //string of origin and destination
         String strOrigin = "origin=" + origin.latitude + "," + origin.longitude;
         String strDest = "destination=" + dest.latitude + "," + dest.longitude;
 
+        //string for waypoints
+        if (!walk.wptsIsEmpty()) {
+            String strWpts = "waypoints=";
+
+            for (int i=0; i<walk.wptsSize(); i++) {
+                strWpts += "via:" + walk.getWpt(i).latitude + "," + walk.getWpt(i).longitude;
+
+                if ( (i+1) < walk.wptsSize() ) {
+                    strWpts += "|";
+                }
+            }
+
+            //concat waypoints to end of destination string (which is the end of origin/destination)
+            strDest += "&" + strWpts;
+        }
+
         //Sensors and mode
         //String sensor = "sensor=false";
-        String mode = "mode=driving";
+        String mode = "mode=walking";
 
         //Output format
         String output = "json";
