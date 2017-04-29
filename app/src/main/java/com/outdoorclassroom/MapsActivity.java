@@ -57,7 +57,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         try {
             AssetManager am = getAssets();
-            InputStream is = am.open("testwalksmall.csv");  //error for EHHWv2.csv
+            InputStream is = am.open("EHHWv2.csv");  //error for EHHWv2.csv
             BufferedReader br = new BufferedReader(
                     new InputStreamReader(is, Charset.forName("UTF-8"))
             );
@@ -150,6 +150,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap.addMarker(endOpt);
 
         if (routes.size() >= 1) {
+            /**
             LatLng origin = walk.getStart();
             LatLng dest = walk.getEnd();
 
@@ -159,55 +160,18 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             //Download json data from Google Directions API
             DownloadTask downloadTask = new DownloadTask();
             downloadTask.execute(url);
-        }
-    }
+             */
 
-    //plots start and end of a walk, sends HTTP request for directions
-    public void onMapPoints (LatLng start, LatLng end) {
+            PolylineOptions lineOptions = addPoints(walk);
 
-        //limiter to how many walks are on the map
-        if (walks.size() > 1) {
-            walks.clear();
-            mMap.clear();
-        }
+            lineOptions = lineSetup(lineOptions);
 
-        //create array for walk (start, end) and add them
-        ArrayList <LatLng> walk = new ArrayList<LatLng>();
-        walk.add(start);
-        walk.add(end);
+            mMap.addPolyline(lineOptions);
 
-        //add walk to markerPoints array
-        walks.add(walk);
-
-        //create MarkerOptions for start and end
-        MarkerOptions startOpt = new MarkerOptions();
-        MarkerOptions endOpt = new MarkerOptions();
-
-        startOpt.position(start);
-        endOpt.position(end);
-
-        startOpt = markerSetup(startOpt);
-        endOpt = markerSetup(endOpt);
-
-        mMap.addMarker(startOpt);
-        mMap.addMarker(endOpt);
-
-        // check that new points were captured
-
-        if (walk.size() >= 2) {
-            LatLng origin = walk.get(0);
-            LatLng dest = walk.get(1);
-
-            //Getting URL to the Google Directions API
-            //String url = getDirectionsUrl(origin,dest);
-
-            //Download json data from Google Directions API
-            DownloadTask downloadTask = new DownloadTask();
-            //downloadTask.execute(url);
         }
 
         //don't increment cCOUNT, should only be done ONCE at ParserTask when drawing polyline
-
+        cCOUNT++;
     }
 
     private MarkerOptions markerSetup (MarkerOptions markerOptions) {
@@ -309,6 +273,16 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             mMap.addPolyline(lineOptions);
             cCOUNT++;
         }
+    }
+
+    private PolylineOptions addPoints (Walk walk) {
+        PolylineOptions lineOptions = new PolylineOptions();
+        lineOptions.add(walk.getStart());
+        for (int i=0; i<walk.wptsSize(); i++) {
+            lineOptions.add(walk.getWpt(i));
+        }
+        lineOptions.add(walk.getEnd());
+        return lineOptions;
     }
 
     private PolylineOptions lineSetup (PolylineOptions lineOptions) {
