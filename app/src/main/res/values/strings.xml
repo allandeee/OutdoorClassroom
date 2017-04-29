@@ -3,4 +3,5 @@
     <string name="test_name">TestingOne</string>
     <string name="title_activity_maps">Map</string>
     <string name="click_text">Click Here</string>
+    <string name="google_maps_key">AIzaSyCryijmuDA-PEjZNOobUK4glZda2wyNFzY</string>
 </resources>
