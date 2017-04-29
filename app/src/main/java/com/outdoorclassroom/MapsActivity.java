@@ -57,7 +57,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         try {
             AssetManager am = getAssets();
-            InputStream is = am.open("EHHWv2.csv");  //error for EHHWv2.csv
+            InputStream is = am.open("EHHWv3.csv");  //error for EHHWv2.csv
             BufferedReader br = new BufferedReader(
                     new InputStreamReader(is, Charset.forName("UTF-8"))
             );
