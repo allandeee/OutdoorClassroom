@@ -1,14 +1,22 @@
 package com.outdoorclassroom;
 
+import android.*;
+import android.Manifest;
+import android.content.pm.PackageManager;
 import android.content.res.AssetManager;
 import android.graphics.Color;
 import android.os.AsyncTask;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.GoogleMap.OnMyLocationButtonClickListener;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
@@ -29,9 +37,17 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
+public class MapsActivity extends FragmentActivity
+        implements
+        OnMapReadyCallback,
+        OnMyLocationButtonClickListener,
+        ActivityCompat.OnRequestPermissionsResultCallback {
 
     private GoogleMap mMap;
+
+    private static final int LOCATION_PERMISSION_REQUEST_CODE = 1;
+
+    private boolean mPermissionDenied = false;
 
     //2-dimensional array, containing array of walks
     ArrayList walks = new ArrayList();
@@ -51,13 +67,47 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mapFragment.getMapAsync(this);
     }
 
-    public Walk readCsvCoord () {
+    /**
+     * Manipulates the map once available.
+     * This callback is triggered when the map is ready to be used.
+     * This is where we can add markers or lines, add listeners or move the camera. In this case,
+     * we just add a marker near Sydney, Australia.
+     * If Google Play services is not installed on the device, the user will be prompted to install
+     * it inside the SupportMapFragment. This method will only be triggered once the user has
+     * installed Google Play services and returned to the app.
+     */
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        mMap = googleMap;
+
+        //my location settings
+        mMap.setOnMyLocationButtonClickListener(this);
+        enableMyLocation();
+
+        // Add a marker in Sydney and move the camera
+        LatLng eHillHeritage = new LatLng(-33.802222, 151.286979);
+        //mMap.addMarker(new MarkerOptions().position(eHillHeritage).title("E Hill Heritage Walk"));
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(eHillHeritage, 15));
+        mMap.setMinZoomPreference(10.0f);
+        mMap.setMaxZoomPreference(20.0f);
+
+        // function to pass coordinates to onMapPoints
+
+        String eHillsFilename = "EHHWv3.csv";
+        Walk eHills = readCsvCoord(eHillsFilename);
+        parseCoord(eHills);
+
+        // function for onMapPoints
+    }
+
+
+    public Walk readCsvCoord (String filename) {
 
         Walk walk = new Walk ();
 
         try {
             AssetManager am = getAssets();
-            InputStream is = am.open("EHHWv3.csv");  //error for EHHWv2.csv
+            InputStream is = am.open(filename);  //error for EHHWv2.csv
             BufferedReader br = new BufferedReader(
                     new InputStreamReader(is, Charset.forName("UTF-8"))
             );
@@ -71,7 +121,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             LatLng start = new LatLng(Double.parseDouble(tokens[1]),Double.parseDouble(tokens[2]));
             walk.setStart(start);
 
-            LatLng waypoint = new LatLng(-33.802222, 151.286979);
+            LatLng waypoint = new LatLng(-33.802222, 151.286979);   // default value of Manly
 
             while ( (line = br.readLine()) != null) {
                 tokens = line.split(",");
@@ -87,34 +137,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             Log.d("CSV Reader Task", e.toString());
         }
         return walk;
-    }
-
-    /**
-     * Manipulates the map once available.
-     * This callback is triggered when the map is ready to be used.
-     * This is where we can add markers or lines, add listeners or move the camera. In this case,
-     * we just add a marker near Sydney, Australia.
-     * If Google Play services is not installed on the device, the user will be prompted to install
-     * it inside the SupportMapFragment. This method will only be triggered once the user has
-     * installed Google Play services and returned to the app.
-     */
-    @Override
-    public void onMapReady(GoogleMap googleMap) {
-        mMap = googleMap;
-
-        // Add a marker in Sydney and move the camera
-        LatLng eHillHeritage = new LatLng(-33.802222, 151.286979);
-        //mMap.addMarker(new MarkerOptions().position(eHillHeritage).title("E Hill Heritage Walk"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(eHillHeritage, 15));
-        mMap.setMinZoomPreference(10.0f);
-        mMap.setMaxZoomPreference(20.0f);
-
-        // function to pass coordinates to onMapPoints
-
-        Walk eHills = readCsvCoord();
-        parseCoord(eHills);
-
-        // function for onMapPoints
     }
 
     private void parseCoord (Walk walk) {
@@ -193,7 +215,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         return markerOptions;
     }
-
 
 
     private class DownloadTask extends AsyncTask <String, Void, String> {
@@ -376,6 +397,63 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         String url = "https://maps.googleapis.com/maps/api/directions/" + output + "?" + parameters;
 
         return url;
+    }
+
+    /**
+     * Enables the My Location layer if the fine location permission has been granted.
+     * From ApiDemo https://github.com/googlemaps/android-samples
+     */
+    private void enableMyLocation() {
+        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED) {
+            // Permission to access the location is missing.
+            PermissionUtils.requestPermission(this, LOCATION_PERMISSION_REQUEST_CODE,
+                    Manifest.permission.ACCESS_FINE_LOCATION, true);
+        } else if (mMap != null) {
+            // Access to the location has been granted to the app.
+            mMap.setMyLocationEnabled(true);
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
+                                           @NonNull int[] grantResults) {
+        if (requestCode != LOCATION_PERMISSION_REQUEST_CODE) {
+            return;
+        }
+
+        if (PermissionUtils.isPermissionGranted(permissions, grantResults,
+                android.Manifest.permission.ACCESS_FINE_LOCATION)) {
+            // Enable the my location layer if the permission has been granted.
+            enableMyLocation();
+        } else {
+            // Display the missing permission error dialog when the fragments resume.
+            mPermissionDenied = true;
+        }
+    }
+
+    @Override
+    public boolean onMyLocationButtonClick() {
+        Toast.makeText(this, "MyLocation button clicked", Toast.LENGTH_SHORT).show();
+        return false;
+    }
+
+    @Override
+    protected void onResumeFragments() {
+        super.onResumeFragments();
+        if (mPermissionDenied) {
+            // Permission was not granted, display error dialog.
+            showMissingPermissionError();
+            mPermissionDenied = false;
+        }
+    }
+
+    /**
+     * Displays a dialog with error message explaining that the location permission is missing.
+     */
+    private void showMissingPermissionError() {
+        PermissionUtils.PermissionDeniedDialog
+                .newInstance(true).show(getSupportFragmentManager(), "dialog");
     }
 
 }

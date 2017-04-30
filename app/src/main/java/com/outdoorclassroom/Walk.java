@@ -10,57 +10,57 @@ class Walk {
     private LatLng end;
     private ArrayList<LatLng> wpts;
 
-    Walk () {
+    public Walk () {
         start = new LatLng(-33.852,151.211);
         end = new LatLng(-33.852,151.211);
         wpts = new ArrayList();
     }
 
-    Walk (LatLng st, LatLng en) {
+    public Walk (LatLng st, LatLng en) {
         start = st;
         end = en;
         wpts = new ArrayList();
     }
 
-    Walk (LatLng st, LatLng en, ArrayList wp) {
+    public Walk (LatLng st, LatLng en, ArrayList wp) {
         start = st;
         end = en;
         wpts = new ArrayList(wp);
     }
 
-    void addWpt (LatLng latLng) {
+    public void addWpt (LatLng latLng) {
         wpts.add(latLng);
     }
 
-    LatLng getStart () {
+    public LatLng getStart () {
         return start;
     }
 
-    LatLng getEnd() {
+    public LatLng getEnd() {
         return end;
     }
 
-    LatLng getWpt (int i) {
+    public LatLng getWpt (int i) {
         return wpts.get(i);
     }
 
-    void setStart (LatLng start) {
+    public void setStart (LatLng start) {
         this.start = start;
     }
 
-    void setEnd(LatLng end) {
+    public void setEnd(LatLng end) {
         this.end = end;
     }
 
-    void removeLastWpt () {
+    public void removeLastWpt () {
         wpts.remove(wpts.size()-1);
     }
 
-    boolean wptsIsEmpty() {
+    public boolean wptsIsEmpty() {
         return wpts.size() <= 0;
     }
 
-    int wptsSize() {
+    public int wptsSize() {
         return wpts.size();
     }
 }
