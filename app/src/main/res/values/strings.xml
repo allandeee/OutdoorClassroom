@@ -4,6 +4,9 @@
     <string name="title_activity_maps">Map</string>
     <string name="click_text">Click Here</string>
     <string name="google_maps_key">AIzaSyCryijmuDA-PEjZNOobUK4glZda2wyNFzY</string>
+    <string name="map_click">Manly Map</string>
+    <string name="browser_click">Browser</string>
+    <string name="database">More Info</string>
 
     <!--PERMISSIONS-->
     <string name="permission_rationale_location">Access to the location service is required to demonstrate the \'my location\' feature, which shows your current location on the map.</string>
