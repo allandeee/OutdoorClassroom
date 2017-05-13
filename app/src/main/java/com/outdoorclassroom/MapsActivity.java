@@ -1,11 +1,10 @@
 package com.outdoorclassroom;
 
-import android.*;
+
 import android.Manifest;
 import android.content.pm.PackageManager;
 import android.content.res.AssetManager;
 import android.graphics.Color;
-import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
@@ -24,7 +23,6 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
 
-import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -34,8 +32,6 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 
 public class MapsActivity extends FragmentActivity
         implements
@@ -216,85 +212,6 @@ public class MapsActivity extends FragmentActivity
         return markerOptions;
     }
 
-
-    private class DownloadTask extends AsyncTask <String, Void, String> {
-
-        @Override
-        protected String doInBackground(String... url) {
-            String data = "";
-
-            try {
-                data = downloadUrl(url[0]);
-            } catch (Exception e) {
-                Log.d("Background Task", e.toString());
-            }
-            return data;
-        }
-
-        @Override
-        protected void onPostExecute(String result) {
-            super.onPostExecute(result);
-
-            ParserTask parserTask = new ParserTask();
-
-            parserTask.execute(result);
-
-        }
-    }
-
-    private class ParserTask extends AsyncTask <String, Integer, List<List<HashMap<String, String>>>> {
-
-
-        // parsing data in non-ui thread
-        @Override
-        protected List<List<HashMap<String, String>>> doInBackground(String... jsonData) {
-            JSONObject jsonObject;
-            List<List<HashMap<String, String>>> routes = null;
-
-            try {
-                jsonObject = new JSONObject(jsonData[0]);
-                DirectionsJSONParser parser = new DirectionsJSONParser();
-
-                routes = parser.parse(jsonObject);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-
-            return routes;
-        }
-
-        @Override
-        protected void onPostExecute(List<List<HashMap<String, String>>> result) {
-            ArrayList points = null;
-            PolylineOptions lineOptions = null;
-            //MarkerOptions markerOptions = new MarkerOptions();
-
-
-            for (int i = 0; i < result.size(); i++) {
-                points = new ArrayList();
-                lineOptions = new PolylineOptions();
-
-                List<HashMap<String, String>> path = result.get(i);
-
-                for (int j = 0; j < path.size(); j++) {
-                    HashMap <String, String> point = path.get(j);
-
-                    double lat = Double.parseDouble(point.get("lat"));
-                    double lng = Double.parseDouble(point.get("lng"));
-                    LatLng position = new LatLng(lat, lng);
-
-                    points.add(position);
-                }
-
-                lineOptions.addAll(points);
-                //lineOptions.add(new LatLng(-33.802222,151.286979), new LatLng(-33.81528,151.285724));
-                lineOptions = lineSetup(lineOptions);
-            }
-
-            mMap.addPolyline(lineOptions);
-            cCOUNT++;
-        }
-    }
 
     private PolylineOptions addPoints (Walk walk) {
         PolylineOptions lineOptions = new PolylineOptions();
