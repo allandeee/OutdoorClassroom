@@ -5,7 +5,7 @@ import com.google.android.gms.maps.model.LatLng;
 import java.util.ArrayList;
 
 
-class Walk {
+public class Walk {
     private LatLng start;
     private LatLng end;
     private ArrayList<LatLng> wpts;

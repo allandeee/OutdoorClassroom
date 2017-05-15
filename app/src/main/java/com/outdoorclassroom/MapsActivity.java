@@ -246,6 +246,7 @@ public class MapsActivity extends FragmentActivity
         return lineOptions;
     }
 
+    // never used, but may be used to open url connection and retrieve JSON data
     private String downloadUrl(String strUrl) throws IOException {
         String data = "";
         InputStream iStream = null;
@@ -278,6 +279,7 @@ public class MapsActivity extends FragmentActivity
         return data;
     }
 
+    // never used, but may be used for retrieving directions
     private String getDirectionsUrl (LatLng origin, LatLng dest, Walk walk) {
 
         //string of origin and destination
