@@ -1,5 +1,11 @@
 package com.outdoorclassroom;
 
+/**
+ * Ctrl-F following index points to find methods for each implementation
+ * I-01: Plot the Walk
+ * I-02: Plot the Landmarks
+ * I-UP: User Permissions
+ */
 
 import android.Manifest;
 import android.content.pm.PackageManager;
@@ -32,6 +38,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class MapsActivity extends FragmentActivity
         implements
@@ -47,8 +54,10 @@ public class MapsActivity extends FragmentActivity
 
     //2-dimensional array, containing array of walks
     ArrayList walks = new ArrayList();
-    //replacer for above walks
+    //array of Walk objects; representing each walk implemented into app
     ArrayList<Walk> routes = new ArrayList<>();
+    //hashmap of Landmark objects identified by name; representing each landmark guided by walks
+    ArrayList<HashMap> walkLandmarks = new ArrayList<>();
 
     //Colour counter for markers and polylines
     int cCOUNT = 0;
@@ -93,9 +102,16 @@ public class MapsActivity extends FragmentActivity
         Walk eHills = readCsvCoord(eHillsFilename);
         parseCoord(eHills);
 
+        String landmarksTest = "LandmarksTest.csv";
+        readCsvLandmarks(landmarksTest);
+
         // function for onMapPoints
     }
 
+
+    /*
+    I-01: Following is to implement methods to PLOT THE WALK
+     */
 
     public Walk readCsvCoord (String filename) {
 
@@ -130,7 +146,7 @@ public class MapsActivity extends FragmentActivity
             walk.setEnd(waypoint);
 
         } catch (Exception e) {
-            Log.d("CSV Reader Task", e.toString());
+            Log.d("CSV Walk Read", e.toString());
         }
         return walk;
     }
@@ -192,6 +208,7 @@ public class MapsActivity extends FragmentActivity
         cCOUNT++;
     }
 
+    // to be changed
     private MarkerOptions markerSetup (MarkerOptions markerOptions) {
 
         switch (cCOUNT) {
@@ -317,6 +334,43 @@ public class MapsActivity extends FragmentActivity
 
         return url;
     }
+
+    /*
+    I-02: Following methods implement the PLOT THE LANDMARKS requirement
+     */
+
+    public HashMap readCsvLandmarks (String filename) {
+        HashMap<String, Landmark> landmarks = new HashMap<>();
+
+        try {
+            AssetManager am = getAssets();
+            InputStream is = am.open(filename);  //error for EHHWv2.csv
+            BufferedReader br = new BufferedReader(
+                    new InputStreamReader(is, Charset.forName("UTF-8"))
+            );
+
+            String line = "";
+            br.readLine();  //skip first line containing headers
+
+            while ( (line = br.readLine()) != null) {
+                String[] tokens = line.split(",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)", -1);
+                Landmark landmark = new Landmark(
+                        tokens[0],
+                        tokens[3],
+                        new LatLng(Double.parseDouble(tokens[1]),Double.parseDouble(tokens[2])));
+                landmarks.put(landmark.getName(), landmark);
+            }
+
+        } catch (Exception e) {
+            Log.d("CSV Landmark Read", e.toString());
+        }
+
+        return landmarks;
+    }
+
+    /*
+    I-UP: Methods to check user permissions
+     */
 
     /**
      * Enables the My Location layer if the fine location permission has been granted.
