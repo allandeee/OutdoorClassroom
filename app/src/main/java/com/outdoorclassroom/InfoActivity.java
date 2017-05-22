@@ -20,7 +20,7 @@ public class InfoActivity extends AppCompatActivity {
         TextView info = (TextView) findViewById(R.id.lm_info);
 
         title.setText(landmark.getName());
-        info.setText(landmark.getSummary());
+        info.setText(landmark.getInfo());
 
     }
 }

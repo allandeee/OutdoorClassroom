@@ -103,7 +103,7 @@ public class MapsActivity extends FragmentActivity
         Walk eHills = readCsvCoord(eHillsFilename);
         parseCoord("Eastern Hills", eHills);
 
-        String landmarksTest = "LandmarksTest.csv";
+        String landmarksTest = "LandmarksTestv3.csv";
         HashMap eHillsLand = readCsvLandmarks(landmarksTest);
         parseCoord(eHillsLand);
 
@@ -389,6 +389,7 @@ public class MapsActivity extends FragmentActivity
                 Landmark landmark = new Landmark(
                         tokens[0],
                         tokens[3],
+                        tokens[4],
                         new LatLng(Double.parseDouble(tokens[1]),Double.parseDouble(tokens[2])));
                 landmarks.put(landmark.getName(), landmark);
             }
