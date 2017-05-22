@@ -52,7 +52,7 @@
         jumboMode="true"
         optimize="true"
         revision="25.0.3"
-        sha1="bc5bcee6d3a044d3dd6ee626b943f54ff9139d15">
+        sha1="ce8aecbd4db293f442edae99d85c5849e1821255">
         <dex dex="C:\Users\Allan\AndroidStudioProjects\OutdoorClassroom\app\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run-bootstrap_190176ddc1f8d5a2cdd4dad43cb93d94b35d3978\classes.dex" />
     </item>
     <item
@@ -72,6 +72,15 @@
         revision="25.0.3"
         sha1="052f5f840f21174a3ecf6544130194e2652cbb73">
         <dex dex="C:\Users\Allan\AndroidStudioProjects\OutdoorClassroom\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_fcdf3acbd4fd1ee1dd5d9e174430bbf5da57f4fa\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Allan\.android\build-cache\3ee016b054823448d0335b73c938bb8f093ff27d\output\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.3"
+        sha1="44ee06abb66da30f5855e6bf54574e64cdcd982a">
+        <dex dex="C:\Users\Allan\AndroidStudioProjects\OutdoorClassroom\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_33315da952e9482caba3c7653379c13be5591308\classes.dex" />
     </item>
     <item
         is-multidex="true"
@@ -99,6 +108,15 @@
         revision="25.0.3"
         sha1="4a26a1154d053ab11aaf4c3967c42a4d66390991">
         <dex dex="C:\Users\Allan\AndroidStudioProjects\OutdoorClassroom\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_a04c2f9171dca98514679ff59861d9da9f442d5f\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="F:\Users\Allan\AppData\Local\Android\sdk\extras\m2repository\com\android\support\constraint\constraint-layout-solver\1.0.2\constraint-layout-solver-1.0.2.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.3"
+        sha1="b9cd8fc6bd15cb915735d34535db30ece0c44603">
+        <dex dex="C:\Users\Allan\AndroidStudioProjects\OutdoorClassroom\app\build\intermediates\transforms\dex\debug\folders\1000\10\constraint-layout-solver-1.0.2_77ef4e2d26dd653ab87187efaedcfd658041ab95\classes.dex" />
     </item>
     <item
         is-multidex="true"

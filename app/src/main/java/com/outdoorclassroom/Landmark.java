@@ -1,5 +1,6 @@
 package com.outdoorclassroom;
 
+
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -52,8 +53,6 @@ public class Landmark implements Parcelable {
         this.latLng = latLng;
     }
 
-    //Parcelling implementation
-
     @Override
     public int describeContents() {
         return 0;
@@ -61,6 +60,26 @@ public class Landmark implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-
+        dest.writeString(this.name);
+        dest.writeString(this.summary);
+        dest.writeParcelable(this.latLng, flags);
     }
+
+    protected Landmark(Parcel in) {
+        this.name = in.readString();
+        this.summary = in.readString();
+        this.latLng = in.readParcelable(LatLng.class.getClassLoader());
+    }
+
+    public static final Parcelable.Creator<Landmark> CREATOR = new Parcelable.Creator<Landmark>() {
+        @Override
+        public Landmark createFromParcel(Parcel source) {
+            return new Landmark(source);
+        }
+
+        @Override
+        public Landmark[] newArray(int size) {
+            return new Landmark[size];
+        }
+    };
 }

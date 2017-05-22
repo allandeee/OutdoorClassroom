@@ -8,6 +8,7 @@ package com.outdoorclassroom;
  */
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.AssetManager;
 import android.graphics.Color;
@@ -464,5 +465,14 @@ public class MapsActivity extends FragmentActivity
     public void onInfoWindowClick(Marker marker) {
         Toast.makeText(this, marker.getTitle() + " clicked",
                 Toast.LENGTH_SHORT).show();
+
+        // will implement loop to search through array of hashmaps
+        Landmark landmark = (Landmark) walkLandmarks.get(0).get(marker.getTitle());
+
+        Intent intent = new Intent(this, InfoActivity.class);
+        intent.putExtra(InfoActivity.LANDMARK, landmark);
+        startActivity(intent);
+
     }
+
 }
