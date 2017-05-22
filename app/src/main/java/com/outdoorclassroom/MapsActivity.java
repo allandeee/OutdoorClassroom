@@ -26,9 +26,9 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
-
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -39,12 +39,14 @@ import java.net.URL;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 public class MapsActivity extends FragmentActivity
         implements
         OnMapReadyCallback,
         OnMyLocationButtonClickListener,
-        ActivityCompat.OnRequestPermissionsResultCallback {
+        ActivityCompat.OnRequestPermissionsResultCallback,
+        GoogleMap.OnInfoWindowClickListener {
 
     private GoogleMap mMap;
 
@@ -52,10 +54,8 @@ public class MapsActivity extends FragmentActivity
 
     private boolean mPermissionDenied = false;
 
-    //2-dimensional array, containing array of walks
-    ArrayList walks = new ArrayList();
     //array of Walk objects; representing each walk implemented into app
-    ArrayList<Walk> routes = new ArrayList<>();
+    HashMap<String,Walk> routes = new HashMap<>();
     //hashmap of Landmark objects identified by name; representing each landmark guided by walks
     ArrayList<HashMap> walkLandmarks = new ArrayList<>();
 
@@ -100,10 +100,13 @@ public class MapsActivity extends FragmentActivity
 
         String eHillsFilename = "EHHWv3.csv";
         Walk eHills = readCsvCoord(eHillsFilename);
-        parseCoord(eHills);
+        parseCoord("Eastern Hills", eHills);
 
         String landmarksTest = "LandmarksTest.csv";
-        readCsvLandmarks(landmarksTest);
+        HashMap eHillsLand = readCsvLandmarks(landmarksTest);
+        parseCoord(eHillsLand);
+
+        mMap.setOnInfoWindowClickListener(this);
 
         // function for onMapPoints
     }
@@ -151,14 +154,41 @@ public class MapsActivity extends FragmentActivity
         return walk;
     }
 
-    private void parseCoord (Walk walk) {
+    private void parseCoord (String name, Walk walk) {
 
         //will implement loop for each walk
-        onMapPoints(walk);
+        onMapPoints(name, walk);
+    }
+
+    private void parseCoord (HashMap landmarks) {
+        plotLandmarks(landmarks);
+    }
+
+    //plot landmarks on Map
+    private void plotLandmarks(HashMap landmarks) {
+
+        walkLandmarks.add(landmarks);
+
+        for (Object o : landmarks.entrySet()) {
+            Map.Entry me = (Map.Entry) o;
+            MarkerOptions marker = new MarkerOptions();
+            Landmark l = (Landmark) me.getValue();
+            marker = markerSetup(l.getName(), l, marker);
+            mMap.addMarker(marker);
+        }
+
+    }
+
+    private MarkerOptions markerSetup (String n, Landmark l, MarkerOptions m) {
+        m.position(l.getLatLng());
+        m.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
+        m.title(l.getName());
+        m.snippet(l.getSummary());
+        return m;
     }
 
     //will implement overloaded onMapPoints function with parameters for waypoints
-    public void onMapPoints (Walk walk) {
+    public void onMapPoints (String name, Walk walk) {
 
         //limiter to how many walks are on the map
         if (routes.size() > 1) {
@@ -169,7 +199,7 @@ public class MapsActivity extends FragmentActivity
         //use Walk object arg
 
         //add Walk object to all routes/walks
-        routes.add(walk);
+        routes.put(name,walk);
 
         //instantiate Marker options for start and end markers
         MarkerOptions startOpt = new MarkerOptions();
@@ -179,6 +209,7 @@ public class MapsActivity extends FragmentActivity
         //retrieve marker settings
         startOpt = markerSetup(startOpt);
         endOpt = markerSetup(endOpt);
+
 
         mMap.addMarker(startOpt);
         mMap.addMarker(endOpt);
@@ -199,7 +230,6 @@ public class MapsActivity extends FragmentActivity
             PolylineOptions lineOptions = addPoints(walk);
 
             lineOptions = lineSetup(lineOptions);
-
             mMap.addPolyline(lineOptions);
 
         }
@@ -208,7 +238,7 @@ public class MapsActivity extends FragmentActivity
         cCOUNT++;
     }
 
-    // to be changed
+    // to be modified for landmarks (maybe)
     private MarkerOptions markerSetup (MarkerOptions markerOptions) {
 
         switch (cCOUNT) {
@@ -229,7 +259,7 @@ public class MapsActivity extends FragmentActivity
         return markerOptions;
     }
 
-
+    //creating line for Map
     private PolylineOptions addPoints (Walk walk) {
         PolylineOptions lineOptions = new PolylineOptions();
         lineOptions.add(walk.getStart());
@@ -240,6 +270,7 @@ public class MapsActivity extends FragmentActivity
         return lineOptions;
     }
 
+    //adjusting line options (colour and width)
     private PolylineOptions lineSetup (PolylineOptions lineOptions) {
 
         lineOptions.width(12);
@@ -429,4 +460,9 @@ public class MapsActivity extends FragmentActivity
                 .newInstance(true).show(getSupportFragmentManager(), "dialog");
     }
 
+    @Override
+    public void onInfoWindowClick(Marker marker) {
+        Toast.makeText(this, marker.getTitle() + " clicked",
+                Toast.LENGTH_SHORT).show();
+    }
 }

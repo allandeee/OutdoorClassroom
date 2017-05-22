@@ -1,12 +1,15 @@
 package com.outdoorclassroom;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.android.gms.maps.model.LatLng;
 
 /**
  * Created by Allan on 15-May-17.
  */
 
-public class Landmark {
+public class Landmark implements Parcelable {
     private String name;
     private String summary;
     private LatLng latLng;
@@ -47,5 +50,17 @@ public class Landmark {
 
     public void setLatLng(LatLng latLng) {
         this.latLng = latLng;
+    }
+
+    //Parcelling implementation
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+
     }
 }
