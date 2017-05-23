@@ -2,6 +2,7 @@ package com.outdoorclassroom;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 public class InfoActivity extends AppCompatActivity {
@@ -18,9 +19,20 @@ public class InfoActivity extends AppCompatActivity {
 
         TextView title = (TextView) findViewById(R.id.lm_title);
         TextView info = (TextView) findViewById(R.id.lm_info);
+        ImageView img = (ImageView) findViewById(R.id.lm_image);
 
         title.setText(landmark.getName());
         info.setText(landmark.getInfo());
+        if (!landmark.getImgName().equals("")) {
+
+            String res = landmark.getImgName();
+
+            int imgID = getResources().getIdentifier(
+                    res,
+                    "drawable",
+                    getPackageName());
+            img.setImageResource(imgID);
+        }
 
     }
 }

@@ -2,49 +2,58 @@
 <items version="2" >
 
     <item
-        is-multidex="true"
-        jar="C:\Users\Allan\.android\build-cache\bd94b44717e19bd0569e4e9f46dd7b97feade97f\output\jars\classes.jar"
-        jumboMode="true"
+        is-multidex="false"
+        jar="C:\Users\Allan\.android\build-cache\99d15302634a4af5169e3f774a1e1892e1e1c75c\output\jars\classes.jar"
+        jumboMode="false"
         optimize="true"
         revision="25.0.3"
-        sha1="45f697922e6f072daa12f8a2995dc77ab03c11da">
-        <dex dex="C:\Users\Allan\AndroidStudioProjects\OutdoorClassroom\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_eb4e0b3d23712ca96caec7bc9065495c2f60959f\classes.dex" />
+        sha1="3f0a85e6000998ac322ddd50750e8cf91601a84b">
+        <dex dex="C:\Users\Allan\AndroidStudioProjects\OutdoorClassroom\app\build\intermediates\pre-dexed\debug\classes_055f2cd30d5ec2f29529ab0f8104db83986647ea.jar" />
     </item>
     <item
-        is-multidex="true"
-        jar="C:\Users\Allan\.android\build-cache\80eaedd8a138dd8bd57df838ac6c2a478888cd37\output\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.3"
-        sha1="900a290779cdb4eb2e63b6f7806fd9f30ce4f60d">
-        <dex dex="C:\Users\Allan\AndroidStudioProjects\OutdoorClassroom\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_ae7d260401e580b70e2082a4b736ab7bdd67e0a8\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\Allan\.android\build-cache\fec4bf715d8fc008a47d653a046a6378a378619c\output\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.3"
-        sha1="6ef31f1555bb4cc513ec8d52711365a8b89f3600">
-        <dex dex="C:\Users\Allan\AndroidStudioProjects\OutdoorClassroom\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_3ec7ef6caf0d5d5e83db90dee367804a7d91474a\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
+        is-multidex="false"
         jar="C:\Users\Allan\.android\build-cache\13df021d643652b7fcc38907032e8fdb3bfc1417\output\jars\classes.jar"
-        jumboMode="true"
+        jumboMode="false"
         optimize="true"
         revision="25.0.3"
         sha1="efb8cb62d47d157c29d1521daac7eefd4cb881ee">
-        <dex dex="C:\Users\Allan\AndroidStudioProjects\OutdoorClassroom\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_872db65b5e8db438eb8152cf55e14d0f6cea55d0\classes.dex" />
+        <dex dex="C:\Users\Allan\AndroidStudioProjects\OutdoorClassroom\app\build\intermediates\pre-dexed\debug\classes_872db65b5e8db438eb8152cf55e14d0f6cea55d0.jar" />
     </item>
     <item
-        is-multidex="true"
+        is-multidex="false"
+        jar="C:\Users\Allan\.android\build-cache\80eaedd8a138dd8bd57df838ac6c2a478888cd37\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="900a290779cdb4eb2e63b6f7806fd9f30ce4f60d">
+        <dex dex="C:\Users\Allan\AndroidStudioProjects\OutdoorClassroom\app\build\intermediates\pre-dexed\debug\classes_ae7d260401e580b70e2082a4b736ab7bdd67e0a8.jar" />
+    </item>
+    <item
+        is-multidex="false"
         jar="C:\Users\Allan\.android\build-cache\03cb2fa8ab143ebd13a62b28d8ccad389b3e2d66\output\jars\classes.jar"
-        jumboMode="true"
+        jumboMode="false"
         optimize="true"
         revision="25.0.3"
         sha1="69e74a8b1cbf5b8ee0fc0cca6bab1ac6c45efef8">
-        <dex dex="C:\Users\Allan\AndroidStudioProjects\OutdoorClassroom\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_f174431d6d51fa89da2bdc9c8263c8240fdfc4ca\classes.dex" />
+        <dex dex="C:\Users\Allan\AndroidStudioProjects\OutdoorClassroom\app\build\intermediates\pre-dexed\debug\classes_f174431d6d51fa89da2bdc9c8263c8240fdfc4ca.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\Allan\.android\build-cache\d143343404b78981679064294b6bf2dbaf9e41d5\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="47635644d0d5c103c1dd8360549eb9ba3225c7d3">
+        <dex dex="C:\Users\Allan\AndroidStudioProjects\OutdoorClassroom\app\build\intermediates\pre-dexed\debug\classes_400fc218d03b164d22b5e54e1903b5c99e3103a2.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\Allan\.android\build-cache\fec4bf715d8fc008a47d653a046a6378a378619c\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="6ef31f1555bb4cc513ec8d52711365a8b89f3600">
+        <dex dex="C:\Users\Allan\AndroidStudioProjects\OutdoorClassroom\app\build\intermediates\pre-dexed\debug\classes_3ec7ef6caf0d5d5e83db90dee367804a7d91474a.jar" />
     </item>
     <item
         is-multidex="true"
@@ -56,67 +65,40 @@
         <dex dex="C:\Users\Allan\AndroidStudioProjects\OutdoorClassroom\app\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run-bootstrap_190176ddc1f8d5a2cdd4dad43cb93d94b35d3978\classes.dex" />
     </item>
     <item
-        is-multidex="true"
-        jar="C:\Users\Allan\.android\build-cache\d143343404b78981679064294b6bf2dbaf9e41d5\output\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.3"
-        sha1="47635644d0d5c103c1dd8360549eb9ba3225c7d3">
-        <dex dex="C:\Users\Allan\AndroidStudioProjects\OutdoorClassroom\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_400fc218d03b164d22b5e54e1903b5c99e3103a2\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\Allan\.android\build-cache\3e8ca5f2e66ca008bcd260b78794f28e12235727\output\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.3"
-        sha1="052f5f840f21174a3ecf6544130194e2652cbb73">
-        <dex dex="C:\Users\Allan\AndroidStudioProjects\OutdoorClassroom\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_fcdf3acbd4fd1ee1dd5d9e174430bbf5da57f4fa\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\Allan\.android\build-cache\3ee016b054823448d0335b73c938bb8f093ff27d\output\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.3"
-        sha1="44ee06abb66da30f5855e6bf54574e64cdcd982a">
-        <dex dex="C:\Users\Allan\AndroidStudioProjects\OutdoorClassroom\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_33315da952e9482caba3c7653379c13be5591308\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
+        is-multidex="false"
         jar="C:\Users\Allan\.android\build-cache\da59181a03895a4fa0efb100c7ee599f411f7ca6\output\jars\classes.jar"
-        jumboMode="true"
+        jumboMode="false"
         optimize="true"
         revision="25.0.3"
         sha1="0c6924cbba8248329a8c58ead6a380efe7eee76e">
-        <dex dex="C:\Users\Allan\AndroidStudioProjects\OutdoorClassroom\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_938a1c362c280943ef3029df95063328f511c5be\classes.dex" />
+        <dex dex="C:\Users\Allan\AndroidStudioProjects\OutdoorClassroom\app\build\intermediates\pre-dexed\debug\classes_938a1c362c280943ef3029df95063328f511c5be.jar" />
     </item>
     <item
-        is-multidex="true"
-        jar="C:\Users\Allan\.android\build-cache\4d8a3fcab9d3d0535ef047ab869f9083c3914a14\output\jars\classes.jar"
-        jumboMode="true"
+        is-multidex="false"
+        jar="C:\Users\Allan\.android\build-cache\3e8ca5f2e66ca008bcd260b78794f28e12235727\output\jars\classes.jar"
+        jumboMode="false"
         optimize="true"
         revision="25.0.3"
-        sha1="da27a32db6af8954ee8061537c7d476fcb1df46f">
-        <dex dex="C:\Users\Allan\AndroidStudioProjects\OutdoorClassroom\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_615554fd07feb9ddd37bf574378c8308659f83be\classes.dex" />
+        sha1="052f5f840f21174a3ecf6544130194e2652cbb73">
+        <dex dex="C:\Users\Allan\AndroidStudioProjects\OutdoorClassroom\app\build\intermediates\pre-dexed\debug\classes_fcdf3acbd4fd1ee1dd5d9e174430bbf5da57f4fa.jar" />
     </item>
     <item
-        is-multidex="true"
+        is-multidex="false"
+        jar="C:\Users\Allan\.android\build-cache\3ee016b054823448d0335b73c938bb8f093ff27d\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="44ee06abb66da30f5855e6bf54574e64cdcd982a">
+        <dex dex="C:\Users\Allan\AndroidStudioProjects\OutdoorClassroom\app\build\intermediates\pre-dexed\debug\classes_33315da952e9482caba3c7653379c13be5591308.jar" />
+    </item>
+    <item
+        is-multidex="false"
         jar="C:\Users\Allan\.android\build-cache\364565f779cc0062a63d51e43baa526aab7bb327\output\jars\classes.jar"
-        jumboMode="true"
+        jumboMode="false"
         optimize="true"
         revision="25.0.3"
         sha1="4a26a1154d053ab11aaf4c3967c42a4d66390991">
-        <dex dex="C:\Users\Allan\AndroidStudioProjects\OutdoorClassroom\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_a04c2f9171dca98514679ff59861d9da9f442d5f\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="F:\Users\Allan\AppData\Local\Android\sdk\extras\m2repository\com\android\support\constraint\constraint-layout-solver\1.0.2\constraint-layout-solver-1.0.2.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.3"
-        sha1="b9cd8fc6bd15cb915735d34535db30ece0c44603">
-        <dex dex="C:\Users\Allan\AndroidStudioProjects\OutdoorClassroom\app\build\intermediates\transforms\dex\debug\folders\1000\10\constraint-layout-solver-1.0.2_77ef4e2d26dd653ab87187efaedcfd658041ab95\classes.dex" />
+        <dex dex="C:\Users\Allan\AndroidStudioProjects\OutdoorClassroom\app\build\intermediates\pre-dexed\debug\classes_a04c2f9171dca98514679ff59861d9da9f442d5f.jar" />
     </item>
     <item
         is-multidex="true"
@@ -128,40 +110,58 @@
         <dex dex="C:\Users\Allan\AndroidStudioProjects\OutdoorClassroom\app\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run_968744bf3f7593a0c1153ee333049b62afb4147d\classes.dex" />
     </item>
     <item
-        is-multidex="true"
+        is-multidex="false"
+        jar="C:\Users\Allan\.android\build-cache\4d8a3fcab9d3d0535ef047ab869f9083c3914a14\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="da27a32db6af8954ee8061537c7d476fcb1df46f">
+        <dex dex="C:\Users\Allan\AndroidStudioProjects\OutdoorClassroom\app\build\intermediates\pre-dexed\debug\classes_615554fd07feb9ddd37bf574378c8308659f83be.jar" />
+    </item>
+    <item
+        is-multidex="false"
         jar="F:\Users\Allan\AppData\Local\Android\sdk\extras\android\m2repository\com\android\support\support-annotations\25.3.1\support-annotations-25.3.1.jar"
-        jumboMode="true"
+        jumboMode="false"
         optimize="true"
         revision="25.0.3"
         sha1="bf8841d29fa39e077730e7a91222c2ce269fa7c9">
-        <dex dex="C:\Users\Allan\AndroidStudioProjects\OutdoorClassroom\app\build\intermediates\transforms\dex\debug\folders\1000\10\support-annotations-25.3.1_7a4adf6e83e223c608f909bc13bfd906297fd45b\classes.dex" />
+        <dex dex="C:\Users\Allan\AndroidStudioProjects\OutdoorClassroom\app\build\intermediates\pre-dexed\debug\support-annotations-25.3.1_7a4adf6e83e223c608f909bc13bfd906297fd45b.jar" />
     </item>
     <item
-        is-multidex="true"
-        jar="C:\Users\Allan\.android\build-cache\821adfadc48206bbe2f294902e0d7f3af83d7fe7\output\jars\classes.jar"
-        jumboMode="true"
+        is-multidex="false"
+        jar="F:\Users\Allan\AppData\Local\Android\sdk\extras\m2repository\com\android\support\constraint\constraint-layout-solver\1.0.2\constraint-layout-solver-1.0.2.jar"
+        jumboMode="false"
         optimize="true"
         revision="25.0.3"
-        sha1="d7c42c80f6509b9ea4db28ca7859ffae08ec5741">
-        <dex dex="C:\Users\Allan\AndroidStudioProjects\OutdoorClassroom\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_b0a3c619ed42a408e3e04892799fdb6dceaf90fa\classes.dex" />
+        sha1="b9cd8fc6bd15cb915735d34535db30ece0c44603">
+        <dex dex="C:\Users\Allan\AndroidStudioProjects\OutdoorClassroom\app\build\intermediates\pre-dexed\debug\constraint-layout-solver-1.0.2_77ef4e2d26dd653ab87187efaedcfd658041ab95.jar" />
     </item>
     <item
-        is-multidex="true"
-        jar="C:\Users\Allan\.android\build-cache\99d15302634a4af5169e3f774a1e1892e1e1c75c\output\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.3"
-        sha1="3f0a85e6000998ac322ddd50750e8cf91601a84b">
-        <dex dex="C:\Users\Allan\AndroidStudioProjects\OutdoorClassroom\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_055f2cd30d5ec2f29529ab0f8104db83986647ea\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
+        is-multidex="false"
         jar="C:\Users\Allan\.android\build-cache\5a180648feaece96790f3716618c4b92359a7d62\output\jars\classes.jar"
-        jumboMode="true"
+        jumboMode="false"
         optimize="true"
         revision="25.0.3"
         sha1="150252b33b00274cc868578ade018fda0d43a3eb">
-        <dex dex="C:\Users\Allan\AndroidStudioProjects\OutdoorClassroom\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_74e9022a0843b3827d804645e898ffaa55f961da\classes.dex" />
+        <dex dex="C:\Users\Allan\AndroidStudioProjects\OutdoorClassroom\app\build\intermediates\pre-dexed\debug\classes_74e9022a0843b3827d804645e898ffaa55f961da.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\Allan\.android\build-cache\821adfadc48206bbe2f294902e0d7f3af83d7fe7\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="d7c42c80f6509b9ea4db28ca7859ffae08ec5741">
+        <dex dex="C:\Users\Allan\AndroidStudioProjects\OutdoorClassroom\app\build\intermediates\pre-dexed\debug\classes_b0a3c619ed42a408e3e04892799fdb6dceaf90fa.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\Allan\.android\build-cache\bd94b44717e19bd0569e4e9f46dd7b97feade97f\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="45f697922e6f072daa12f8a2995dc77ab03c11da">
+        <dex dex="C:\Users\Allan\AndroidStudioProjects\OutdoorClassroom\app\build\intermediates\pre-dexed\debug\classes_eb4e0b3d23712ca96caec7bc9065495c2f60959f.jar" />
     </item>
 
 </items>

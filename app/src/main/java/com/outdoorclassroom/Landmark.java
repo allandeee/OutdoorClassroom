@@ -15,20 +15,23 @@ public class Landmark implements Parcelable {
     private String summary;
     private String info;
     private LatLng latLng;
+    private String imgName;
 
     // default landmark for Manly
     public Landmark () {
         name = "Manly";
         summary = "Default landmark";
         info = "Default information";
+        imgName = "";
         latLng = new LatLng(-33.802222, 151.286979);
     }
 
     // creating landmark
-    public Landmark (String n, String s, String i, LatLng l) {
+    public Landmark (String n, String s, String i, String im, LatLng l) {
         name = n;
         summary = s;
         info = i;
+        imgName = im;
         latLng = l;
     }
 
@@ -64,6 +67,10 @@ public class Landmark implements Parcelable {
         this.latLng = latLng;
     }
 
+    public String getImgName() {
+        return imgName;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -74,6 +81,7 @@ public class Landmark implements Parcelable {
         dest.writeString(this.name);
         dest.writeString(this.summary);
         dest.writeString(this.info);
+        dest.writeString(this.imgName);
         dest.writeParcelable(this.latLng, flags);
     }
 
@@ -81,6 +89,7 @@ public class Landmark implements Parcelable {
         this.name = in.readString();
         this.summary = in.readString();
         this.info = in.readString();
+        this.imgName = in.readString();
         this.latLng = in.readParcelable(LatLng.class.getClassLoader());
     }
 
