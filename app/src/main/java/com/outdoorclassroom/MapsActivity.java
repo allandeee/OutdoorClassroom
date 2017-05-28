@@ -1,7 +1,14 @@
 package com.outdoorclassroom;
 
+/**
+ * Ctrl-F following index points to find methods for each implementation
+ * I-01: Plot the Walk
+ * I-02: Plot the Landmarks
+ * I-UP: User Permissions
+ */
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.AssetManager;
 import android.graphics.Color;
@@ -20,9 +27,9 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
-
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -32,12 +39,15 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class MapsActivity extends FragmentActivity
         implements
         OnMapReadyCallback,
         OnMyLocationButtonClickListener,
-        ActivityCompat.OnRequestPermissionsResultCallback {
+        ActivityCompat.OnRequestPermissionsResultCallback,
+        GoogleMap.OnInfoWindowClickListener {
 
     private GoogleMap mMap;
 
@@ -45,10 +55,10 @@ public class MapsActivity extends FragmentActivity
 
     private boolean mPermissionDenied = false;
 
-    //2-dimensional array, containing array of walks
-    ArrayList walks = new ArrayList();
-    //replacer for above walks
-    ArrayList<Walk> routes = new ArrayList<>();
+    //array of Walk objects; representing each walk implemented into app
+    HashMap<String,Walk> routes = new HashMap<>();
+    //hashmap of Landmark objects identified by name; representing each landmark guided by walks
+    ArrayList<HashMap> walkLandmarks = new ArrayList<>();
 
     //Colour counter for markers and polylines
     int cCOUNT = 0;
@@ -91,11 +101,21 @@ public class MapsActivity extends FragmentActivity
 
         String eHillsFilename = "EHHWv3.csv";
         Walk eHills = readCsvCoord(eHillsFilename);
-        parseCoord(eHills);
+        parseCoord("Eastern Hills", eHills);
+
+        String landmarksTest = "LandmarksTestv4.csv";
+        HashMap eHillsLand = readCsvLandmarks(landmarksTest);
+        parseCoord(eHillsLand);
+
+        mMap.setOnInfoWindowClickListener(this);
 
         // function for onMapPoints
     }
 
+
+    /*
+    I-01: Following is to implement methods to PLOT THE WALK
+     */
 
     public Walk readCsvCoord (String filename) {
 
@@ -130,19 +150,46 @@ public class MapsActivity extends FragmentActivity
             walk.setEnd(waypoint);
 
         } catch (Exception e) {
-            Log.d("CSV Reader Task", e.toString());
+            Log.d("CSV Walk Read", e.toString());
         }
         return walk;
     }
 
-    private void parseCoord (Walk walk) {
+    private void parseCoord (String name, Walk walk) {
 
         //will implement loop for each walk
-        onMapPoints(walk);
+        onMapPoints(name, walk);
+    }
+
+    private void parseCoord (HashMap landmarks) {
+        plotLandmarks(landmarks);
+    }
+
+    //plot landmarks on Map
+    private void plotLandmarks(HashMap landmarks) {
+
+        walkLandmarks.add(landmarks);
+
+        for (Object o : landmarks.entrySet()) {
+            Map.Entry me = (Map.Entry) o;
+            MarkerOptions marker = new MarkerOptions();
+            Landmark l = (Landmark) me.getValue();
+            marker = markerSetup(l.getName(), l, marker);
+            mMap.addMarker(marker);
+        }
+
+    }
+
+    private MarkerOptions markerSetup (String n, Landmark l, MarkerOptions m) {
+        m.position(l.getLatLng());
+        m.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
+        m.title(l.getName());
+        m.snippet(l.getSummary());
+        return m;
     }
 
     //will implement overloaded onMapPoints function with parameters for waypoints
-    public void onMapPoints (Walk walk) {
+    public void onMapPoints (String name, Walk walk) {
 
         //limiter to how many walks are on the map
         if (routes.size() > 1) {
@@ -153,7 +200,7 @@ public class MapsActivity extends FragmentActivity
         //use Walk object arg
 
         //add Walk object to all routes/walks
-        routes.add(walk);
+        routes.put(name,walk);
 
         //instantiate Marker options for start and end markers
         MarkerOptions startOpt = new MarkerOptions();
@@ -163,6 +210,7 @@ public class MapsActivity extends FragmentActivity
         //retrieve marker settings
         startOpt = markerSetup(startOpt);
         endOpt = markerSetup(endOpt);
+
 
         mMap.addMarker(startOpt);
         mMap.addMarker(endOpt);
@@ -183,7 +231,6 @@ public class MapsActivity extends FragmentActivity
             PolylineOptions lineOptions = addPoints(walk);
 
             lineOptions = lineSetup(lineOptions);
-
             mMap.addPolyline(lineOptions);
 
         }
@@ -192,6 +239,7 @@ public class MapsActivity extends FragmentActivity
         cCOUNT++;
     }
 
+    // to be modified for landmarks (maybe)
     private MarkerOptions markerSetup (MarkerOptions markerOptions) {
 
         switch (cCOUNT) {
@@ -212,7 +260,7 @@ public class MapsActivity extends FragmentActivity
         return markerOptions;
     }
 
-
+    //creating line for Map
     private PolylineOptions addPoints (Walk walk) {
         PolylineOptions lineOptions = new PolylineOptions();
         lineOptions.add(walk.getStart());
@@ -223,6 +271,7 @@ public class MapsActivity extends FragmentActivity
         return lineOptions;
     }
 
+    //adjusting line options (colour and width)
     private PolylineOptions lineSetup (PolylineOptions lineOptions) {
 
         lineOptions.width(12);
@@ -246,6 +295,7 @@ public class MapsActivity extends FragmentActivity
         return lineOptions;
     }
 
+    // never used, but may be used to open url connection and retrieve JSON data
     private String downloadUrl(String strUrl) throws IOException {
         String data = "";
         InputStream iStream = null;
@@ -278,6 +328,7 @@ public class MapsActivity extends FragmentActivity
         return data;
     }
 
+    // never used, but may be used for retrieving directions
     private String getDirectionsUrl (LatLng origin, LatLng dest, Walk walk) {
 
         //string of origin and destination
@@ -315,6 +366,45 @@ public class MapsActivity extends FragmentActivity
 
         return url;
     }
+
+    /*
+    I-02: Following methods implement the PLOT THE LANDMARKS requirement
+     */
+
+    public HashMap readCsvLandmarks (String filename) {
+        HashMap<String, Landmark> landmarks = new HashMap<>();
+
+        try {
+            AssetManager am = getAssets();
+            InputStream is = am.open(filename);  //error for EHHWv2.csv
+            BufferedReader br = new BufferedReader(
+                    new InputStreamReader(is, Charset.forName("UTF-8"))
+            );
+
+            String line = "";
+            br.readLine();  //skip first line containing headers
+
+            while ( (line = br.readLine()) != null) {
+                String[] tokens = line.split(",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)", -1);
+                Landmark landmark = new Landmark(
+                        tokens[0],
+                        tokens[3],
+                        tokens[4],
+                        tokens[5],
+                        new LatLng(Double.parseDouble(tokens[1]),Double.parseDouble(tokens[2])));
+                landmarks.put(landmark.getName(), landmark);
+            }
+
+        } catch (Exception e) {
+            Log.d("CSV Landmark Read", e.toString());
+        }
+
+        return landmarks;
+    }
+
+    /*
+    I-UP: Methods to check user permissions
+     */
 
     /**
      * Enables the My Location layer if the fine location permission has been granted.
@@ -371,6 +461,20 @@ public class MapsActivity extends FragmentActivity
     private void showMissingPermissionError() {
         PermissionUtils.PermissionDeniedDialog
                 .newInstance(true).show(getSupportFragmentManager(), "dialog");
+    }
+
+    @Override
+    public void onInfoWindowClick(Marker marker) {
+        Toast.makeText(this, marker.getTitle() + " clicked",
+                Toast.LENGTH_SHORT).show();
+
+        // will implement loop to search through array of hashmaps
+        Landmark landmark = (Landmark) walkLandmarks.get(0).get(marker.getTitle());
+
+        Intent intent = new Intent(this, InfoActivity.class);
+        intent.putExtra(InfoActivity.LANDMARK, landmark);
+        startActivity(intent);
+
     }
 
 }
