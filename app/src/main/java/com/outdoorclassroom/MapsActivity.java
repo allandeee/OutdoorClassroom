@@ -12,12 +12,14 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.AssetManager;
 import android.graphics.Color;
+import android.support.annotation.IdRes;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
+import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -27,6 +29,7 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
@@ -60,6 +63,13 @@ public class MapsActivity extends FragmentActivity
     //hashmap of Landmark objects identified by name; representing each landmark guided by walks
     ArrayList<HashMap> walkLandmarks = new ArrayList<>();
 
+    // default Manly LatLng
+    LatLng MANLY_CENTRE = new LatLng(-33.802222, 151.286979);
+    // Constrain the camera target to Manly bounds
+    LatLngBounds MANLY_BOUNDS = new LatLngBounds(
+            new LatLng(-33.823600, 151.262807), new LatLng(-33.782981, 151.309864)
+    );
+
     //Colour counter for markers and polylines
     int cCOUNT = 0;
 
@@ -71,6 +81,7 @@ public class MapsActivity extends FragmentActivity
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
     }
 
     /**
@@ -90,12 +101,37 @@ public class MapsActivity extends FragmentActivity
         mMap.setOnMyLocationButtonClickListener(this);
         enableMyLocation();
 
+        /**
+         * Implemented from
+         * http://wptrafficanalyzer.in/blog/google-map-android-api-v2-switching-between-normal-view-satellite-view-and-terrain-view/
+         */
+        mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+        RadioGroup rgViews = (RadioGroup) findViewById(R.id.rg_views);
+        rgViews.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, @IdRes int checkedId) {
+                if (checkedId == R.id.rb_norm) {
+                    mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+                }
+                else if (checkedId == R.id.rb_sat) {
+                    mMap.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
+                }
+                else if (checkedId == R.id.rb_terr) {
+                    mMap.setMapType(GoogleMap.MAP_TYPE_TERRAIN);
+                }
+            }
+        });
+
+
+
         // Add a marker in Sydney and move the camera
         LatLng eHillHeritage = new LatLng(-33.802222, 151.286979);
         //mMap.addMarker(new MarkerOptions().position(eHillHeritage).title("E Hill Heritage Walk"));
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(eHillHeritage, 15));
-        mMap.setMinZoomPreference(10.0f);
+        mMap.setMinZoomPreference(14.0f);
         mMap.setMaxZoomPreference(20.0f);
+        // setting bounds to map
+        mMap.setLatLngBoundsForCameraTarget(MANLY_BOUNDS);
 
         // function to pass coordinates to onMapPoints
 
@@ -137,7 +173,7 @@ public class MapsActivity extends FragmentActivity
             LatLng start = new LatLng(Double.parseDouble(tokens[1]),Double.parseDouble(tokens[2]));
             walk.setStart(start);
 
-            LatLng waypoint = new LatLng(-33.802222, 151.286979);   // default value of Manly
+            LatLng waypoint = MANLY_CENTRE;   // default value of Manly
 
             while ( (line = br.readLine()) != null) {
                 tokens = line.split(",");
