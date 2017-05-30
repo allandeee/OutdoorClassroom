@@ -43,8 +43,21 @@
 
         <activity
             android:name=".MapsActivity"
-            android:label="@string/title_activity_maps"></activity>
-        <activity android:name=".InfoActivity"></activity>
+            android:label="@string/title_activity_maps" />
+        <activity android:name=".InfoActivity" />
+        <activity
+            android:name=".WalkListActivity"
+            android:label="@string/title_walk_list"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".WalkDetailActivity"
+            android:label="@string/title_walk_detail"
+            android:parentActivityName=".WalkListActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.outdoorclassroom.WalkListActivity" />
+        </activity>
     </application>
 
 </manifest>
