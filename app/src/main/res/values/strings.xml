@@ -9,6 +9,9 @@
     <string name="database">More Info</string>
     <string name="default_title">Default</string>
     <string name="img_desc">Image of landmark</string>
+    <string name="rb_normal">Normal</string>
+    <string name="rb_satellite">Satellite</string>
+    <string name="rb_terrain">Terrain</string>
 
     <!--PERMISSIONS-->
     <string name="permission_rationale_location">Access to the location service is required to demonstrate the \'my location\' feature, which shows your current location on the map.</string>
