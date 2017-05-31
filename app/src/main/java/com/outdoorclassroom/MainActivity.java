@@ -23,7 +23,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 startActivity(new Intent(MainActivity.this, MapsActivity.class));
                 break;
             case R.id.browser:
-                Toast.makeText(getBaseContext(), "Browser to be implemented", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(MainActivity.this, WalkListActivity.class));
+                //Toast.makeText(getBaseContext(), "Browser to be implemented", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.info:
                 Toast.makeText(getBaseContext(), "Database to be implemented", Toast.LENGTH_SHORT).show();

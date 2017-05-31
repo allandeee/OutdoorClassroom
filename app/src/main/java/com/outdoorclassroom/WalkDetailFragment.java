@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.outdoorclassroom.dummy.DummyContent;
@@ -49,7 +50,7 @@ public class WalkDetailFragment extends Fragment {
             Activity activity = this.getActivity();
             CollapsingToolbarLayout appBarLayout = (CollapsingToolbarLayout) activity.findViewById(R.id.toolbar_layout);
             if (appBarLayout != null) {
-                appBarLayout.setTitle(mItem.content);
+                appBarLayout.setTitle(mItem.walk_name);
             }
         }
     }
@@ -61,7 +62,15 @@ public class WalkDetailFragment extends Fragment {
 
         // Show the dummy content as text in a TextView.
         if (mItem != null) {
-            ((TextView) rootView.findViewById(R.id.walk_detail)).setText(mItem.details);
+            String res = mItem.img_name;
+
+            int imgID = getResources().getIdentifier(
+                    res,
+                    "drawable",
+                    getContext().getPackageName());
+            ( (ImageView) rootView.findViewById(R.id.walk_image) ).setImageResource(imgID);
+            ( (TextView) rootView.findViewById(R.id.walk_detail) ).setText(mItem.desc);
+            // add a TextView for description
         }
 
         return rootView;

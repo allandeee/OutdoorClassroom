@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.NavUtils;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 /**
  * An activity representing a single Walk detail screen. This
@@ -30,6 +31,10 @@ public class WalkDetailActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                String str = getIntent().getStringExtra(WalkDetailFragment.ARG_ITEM_ID);
+                Intent intent = new Intent(WalkDetailActivity.this, MapsActivity.class);
+                intent.putExtra(MapsActivity.MAP_ID, str);
+                startActivity(intent);
                 Snackbar.make(view, "Replace with your own detail action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
@@ -54,8 +59,8 @@ public class WalkDetailActivity extends AppCompatActivity {
             // Create the detail fragment and add it to the activity
             // using a fragment transaction.
             Bundle arguments = new Bundle();
-            arguments.putString(WalkDetailFragment.ARG_ITEM_ID,
-                    getIntent().getStringExtra(WalkDetailFragment.ARG_ITEM_ID));
+            String str = getIntent().getStringExtra(WalkDetailFragment.ARG_ITEM_ID);
+            arguments.putString(WalkDetailFragment.ARG_ITEM_ID,str);
             WalkDetailFragment fragment = new WalkDetailFragment();
             fragment.setArguments(arguments);
             getSupportFragmentManager().beginTransaction()

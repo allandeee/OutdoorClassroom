@@ -48,7 +48,8 @@ public class WalkListActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                startActivity(new Intent(WalkListActivity.this, MapsActivity.class));
+                Snackbar.make(view, "Go to Map", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
         });
@@ -90,7 +91,7 @@ public class WalkListActivity extends AppCompatActivity {
         public void onBindViewHolder(final ViewHolder holder, int position) {
             holder.mItem = mValues.get(position);
             holder.mIdView.setText(mValues.get(position).id);
-            holder.mContentView.setText(mValues.get(position).content);
+            holder.mContentView.setText(mValues.get(position).walk_name);
 
             holder.mView.setOnClickListener(new View.OnClickListener() {
                 @Override
