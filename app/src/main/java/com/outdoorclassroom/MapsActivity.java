@@ -11,6 +11,7 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.AssetManager;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.support.annotation.IdRes;
 import android.support.annotation.NonNull;
@@ -21,6 +22,7 @@ import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.widget.RadioGroup;
 import android.widget.Toast;
+import com.google.android.gms.maps.model.MapStyleOptions;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -45,6 +47,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import static com.outdoorclassroom.App.getContext;
+
 public class MapsActivity extends FragmentActivity
         implements
         OnMapReadyCallback,
@@ -54,6 +58,7 @@ public class MapsActivity extends FragmentActivity
 
     private GoogleMap mMap;
 
+    private static final String TAG = MapsActivity.class.getSimpleName();
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1;
 
     public static final String MAP_ID = "map_id";
@@ -79,6 +84,7 @@ public class MapsActivity extends FragmentActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
+        setTitle(getString(R.string.map_activity));
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
@@ -98,6 +104,15 @@ public class MapsActivity extends FragmentActivity
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
+
+        try {
+            boolean success = mMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(getContext(), R.raw.style_json));
+            if (!success) {
+                Log.e("MapsActivityRaw", "Style parsing failed.");
+            }
+        } catch (Resources.NotFoundException e) {
+            Log.e("MapsActivityRaw", "Can't find style.", e);
+        }
 
         //my location settings
         mMap.setOnMyLocationButtonClickListener(this);

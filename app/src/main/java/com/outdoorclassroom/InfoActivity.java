@@ -14,6 +14,8 @@ public class InfoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_info);
 
+        setTitle(getString(R.string.info_activity));
+
         Bundle data = getIntent().getExtras();
         landmark = data.getParcelable(LANDMARK);
 
