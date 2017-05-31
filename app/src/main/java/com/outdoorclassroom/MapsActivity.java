@@ -43,7 +43,6 @@ import java.net.URL;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 
 public class MapsActivity extends FragmentActivity
@@ -253,7 +252,7 @@ public class MapsActivity extends FragmentActivity
 
     private MarkerOptions markerSetup (String n, Landmark l, MarkerOptions m) {
         m.position(l.getLatLng());
-        m.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
+        m.icon(BitmapDescriptorFactory.fromResource(R.drawable.arrow_4));
         m.title(l.getName());
         m.snippet(l.getSummary());
         return m;
@@ -314,7 +313,7 @@ public class MapsActivity extends FragmentActivity
 
         switch (cCOUNT) {
             case 0:
-                markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE));
+                markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.flag_7));
                 break;
             case 1:
                 markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
