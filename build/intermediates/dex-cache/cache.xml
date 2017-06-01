@@ -2,49 +2,175 @@
 <items version="2" >
 
     <item
-        is-multidex="true"
-        jar="C:\Users\Allan\AndroidStudioProjects\OutdoorClassroom\app\build\intermediates\incremental-runtime-classes\debug\instant-run.jar"
-        jumboMode="true"
+        is-multidex="false"
+        jar="C:\Users\allan\.android\build-cache\4acfdcac4cdbaecdba53f27bb6c3f2da4fc8a8a0\output\jars\classes.jar"
+        jumboMode="false"
         optimize="true"
         revision="25.0.3"
-        sha1="12920f9016b8b05acbc2af7cdc13cef6946fe7d3">
-        <dex dex="C:\Users\Allan\AndroidStudioProjects\OutdoorClassroom\app\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run_968744bf3f7593a0c1153ee333049b62afb4147d\classes.dex" />
+        sha1="da27a32db6af8954ee8061537c7d476fcb1df46f">
+        <dex dex="C:\Users\allan\AndroidStudioProjects\OutdoorClassroom\app\build\intermediates\pre-dexed\debug\classes_efc6a9c6113a355609bc83d4e170bd6c661270df.jar" />
     </item>
     <item
-        is-multidex="true"
-        jar="C:\Users\Allan\.android\build-cache\b8f6967525b60810ba5ee4cfb3e3b71a0f6a6aa3\output\jars\classes.jar"
-        jumboMode="true"
+        is-multidex="false"
+        jar="C:\Users\allan\.android\build-cache\a53ca15a7de3e9dd5eaa082aa18ee09405753e7c\output\jars\classes.jar"
+        jumboMode="false"
         optimize="true"
         revision="25.0.3"
-        sha1="d4cf6227dd6a2ceff0f7dcf0c324380b7abf2c28">
-        <dex dex="C:\Users\Allan\AndroidStudioProjects\OutdoorClassroom\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_2a1136b293fb368da5629aa850c0cfdb178a63fa\classes.dex" />
+        sha1="3f0a85e6000998ac322ddd50750e8cf91601a84b">
+        <dex dex="C:\Users\allan\AndroidStudioProjects\OutdoorClassroom\app\build\intermediates\pre-dexed\debug\classes_a1abd969e6c3fa57b5024e8fc1516e05ccdb0bd4.jar" />
     </item>
     <item
-        is-multidex="true"
-        jar="C:\Users\Allan\.android\build-cache\df09377a71af021d03477090722ec322db057357\output\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.3"
-        sha1="95519720620b553f63afc789beba9ad582807f7c">
-        <dex dex="C:\Users\Allan\AndroidStudioProjects\OutdoorClassroom\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_92e32b234827b0bd3c3a0ac32706690b27bd08b4\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\Allan\AndroidStudioProjects\OutdoorClassroom\app\build\intermediates\incremental-classes\debug\instant-run-bootstrap.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.3"
-        sha1="96a852ace5038e6db77a89c5a6f30ed9d4bfed7e">
-        <dex dex="C:\Users\Allan\AndroidStudioProjects\OutdoorClassroom\app\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run-bootstrap_190176ddc1f8d5a2cdd4dad43cb93d94b35d3978\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\Allan\.android\build-cache\edfa56a2d5357d69187b61392627fcbdb1bad72a\output\jars\classes.jar"
-        jumboMode="true"
+        is-multidex="false"
+        jar="C:\Users\allan\.android\build-cache\002ff1c10eee2fb25e027d23130316ea1632b7fa\output\jars\classes.jar"
+        jumboMode="false"
         optimize="true"
         revision="25.0.3"
         sha1="38789e20ace9ab7dbd00554bd2673ab424478d3b">
-        <dex dex="C:\Users\Allan\AndroidStudioProjects\OutdoorClassroom\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_70826aa346c7e214e92d643689a4cc66e6e7b7cf\classes.dex" />
+        <dex dex="C:\Users\allan\AndroidStudioProjects\OutdoorClassroom\app\build\intermediates\pre-dexed\debug\classes_13d44c4b2ac66e9424ce3a28009b29ed24c5fb43.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\allan\.android\build-cache\281d6ad7091208c1cc335720a370d4e3b50d42b4\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="052f5f840f21174a3ecf6544130194e2652cbb73">
+        <dex dex="C:\Users\allan\AndroidStudioProjects\OutdoorClassroom\app\build\intermediates\pre-dexed\debug\classes_97ac0d43c15788c646b64e29f610d4fd4b7b287f.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\allan\.android\build-cache\49dc381eaa4c67b149eddc9f06b203082f0d3854\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="d7c42c80f6509b9ea4db28ca7859ffae08ec5741">
+        <dex dex="C:\Users\allan\AndroidStudioProjects\OutdoorClassroom\app\build\intermediates\pre-dexed\debug\classes_20dd3a1c0f7524927b91d22b5ce6cc54d645cf16.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\allan\.android\build-cache\195f20dfc7ddf1e399cabe36cfe315626e75cde8\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="d4cf6227dd6a2ceff0f7dcf0c324380b7abf2c28">
+        <dex dex="C:\Users\allan\AndroidStudioProjects\OutdoorClassroom\app\build\intermediates\pre-dexed\debug\classes_def86d265f447e71520cf40c34e838564e25cc10.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\allan\.android\build-cache\a0a0cb8e6cfb747fa4c33cbe37fde25dd81dfcd4\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="4a26a1154d053ab11aaf4c3967c42a4d66390991">
+        <dex dex="C:\Users\allan\AndroidStudioProjects\OutdoorClassroom\app\build\intermediates\pre-dexed\debug\classes_8b153bad4904e1ec1c8fe444cadbe24ce8c07b9f.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\allan\.android\build-cache\c6947649ce197d7b5e49676a0574a1a9ca8dcf13\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="45f697922e6f072daa12f8a2995dc77ab03c11da">
+        <dex dex="C:\Users\allan\AndroidStudioProjects\OutdoorClassroom\app\build\intermediates\pre-dexed\debug\classes_96b3dfdf1d4de8757035c48ac65c69db6993194d.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\allan\.android\build-cache\dd2de0a69cf683c7bec8089ea7334ee6df7a7eab\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="900a290779cdb4eb2e63b6f7806fd9f30ce4f60d">
+        <dex dex="C:\Users\allan\AndroidStudioProjects\OutdoorClassroom\app\build\intermediates\pre-dexed\debug\classes_91f01d8332bae398f7704b709bcae26fb6f3b8e2.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\allan\.android\build-cache\dbb6815b874780e1a64b16bef258dda90e5ecad8\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="150252b33b00274cc868578ade018fda0d43a3eb">
+        <dex dex="C:\Users\allan\AndroidStudioProjects\OutdoorClassroom\app\build\intermediates\pre-dexed\debug\classes_12591a0ac532d3ec249ef13ccdcf09d3c222459d.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\allan\AppData\Local\Android\sdk\extras\m2repository\com\android\support\constraint\constraint-layout-solver\1.0.2\constraint-layout-solver-1.0.2.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="b9cd8fc6bd15cb915735d34535db30ece0c44603">
+        <dex dex="C:\Users\allan\AndroidStudioProjects\OutdoorClassroom\app\build\intermediates\pre-dexed\debug\constraint-layout-solver-1.0.2_c632f4aba7edd4ef926d1ce51f24710956d4b3bc.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\allan\AppData\Local\Android\sdk\extras\android\m2repository\com\android\support\support-annotations\25.3.1\support-annotations-25.3.1.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="bf8841d29fa39e077730e7a91222c2ce269fa7c9">
+        <dex dex="C:\Users\allan\AndroidStudioProjects\OutdoorClassroom\app\build\intermediates\pre-dexed\debug\support-annotations-25.3.1_26f04a3b13fe3ad3160167a5d16d6c0eddefd9ac.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\allan\.android\build-cache\d28b9b49e059af066f4bb18ab18d5fef5def935a\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="95519720620b553f63afc789beba9ad582807f7c">
+        <dex dex="C:\Users\allan\AndroidStudioProjects\OutdoorClassroom\app\build\intermediates\pre-dexed\debug\classes_a973b6444b001f7202310369a82d45c81431bdc2.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\allan\.android\build-cache\6305ad1a8ee86948fcc24ff78146cc942869429f\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="6ef31f1555bb4cc513ec8d52711365a8b89f3600">
+        <dex dex="C:\Users\allan\AndroidStudioProjects\OutdoorClassroom\app\build\intermediates\pre-dexed\debug\classes_deff6f70cdf4e820ed861f5446dfd811e302dbf2.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\allan\.android\build-cache\f37ac7a0f00b833c4190497d6be5695841baaef7\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="0c6924cbba8248329a8c58ead6a380efe7eee76e">
+        <dex dex="C:\Users\allan\AndroidStudioProjects\OutdoorClassroom\app\build\intermediates\pre-dexed\debug\classes_60842304b6c9fbdec4cd15e1c514e6fbbcda350a.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\allan\.android\build-cache\55bd29c1237bf18f55d95d7d550c85c8bf8ddc09\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="44ee06abb66da30f5855e6bf54574e64cdcd982a">
+        <dex dex="C:\Users\allan\AndroidStudioProjects\OutdoorClassroom\app\build\intermediates\pre-dexed\debug\classes_8aa596982fdaa665634dfa459f01ccc840dc2bc2.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\allan\.android\build-cache\f9d994dab82f367f401fd7435a6562d9d98187d5\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="47635644d0d5c103c1dd8360549eb9ba3225c7d3">
+        <dex dex="C:\Users\allan\AndroidStudioProjects\OutdoorClassroom\app\build\intermediates\pre-dexed\debug\classes_c9b3ce651529fae991e8c5a7685e669581172ef7.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\allan\.android\build-cache\45035cc55fc8df4ead01e31f2a65018ac0d8e455\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="efb8cb62d47d157c29d1521daac7eefd4cb881ee">
+        <dex dex="C:\Users\allan\AndroidStudioProjects\OutdoorClassroom\app\build\intermediates\pre-dexed\debug\classes_267a005e16b76d15c7f261dfca231f7e0a451ee4.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\allan\.android\build-cache\2a721b113a926a3c241a481a62ae25903cb198e7\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="69e74a8b1cbf5b8ee0fc0cca6bab1ac6c45efef8">
+        <dex dex="C:\Users\allan\AndroidStudioProjects\OutdoorClassroom\app\build\intermediates\pre-dexed\debug\classes_6903353f84bb1d55f711faca9bcd73e1f14e078b.jar" />
     </item>
 
 </items>
