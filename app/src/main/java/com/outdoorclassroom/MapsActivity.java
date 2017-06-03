@@ -11,6 +11,7 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.AssetManager;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.support.annotation.IdRes;
 import android.support.annotation.NonNull;
@@ -21,6 +22,7 @@ import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.widget.RadioGroup;
 import android.widget.Toast;
+import com.google.android.gms.maps.model.MapStyleOptions;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -45,6 +47,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import static com.outdoorclassroom.App.getContext;
+
 public class MapsActivity extends FragmentActivity
         implements
         OnMapReadyCallback,
@@ -54,14 +58,17 @@ public class MapsActivity extends FragmentActivity
 
     private GoogleMap mMap;
 
+    private static final String TAG = MapsActivity.class.getSimpleName();
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1;
+
+    public static final String MAP_ID = "map_id";
 
     private boolean mPermissionDenied = false;
 
     //array of Walk objects; representing each walk implemented into app
     HashMap<String,Walk> routes = new HashMap<>();
     //hashmap of Landmark objects identified by name; representing each landmark guided by walks
-    ArrayList<HashMap> walkLandmarks = new ArrayList<>();
+    ArrayList<HashMap<String,Landmark>> walkLandmarks = new ArrayList<>();
 
     // default Manly LatLng
     LatLng MANLY_CENTRE = new LatLng(-33.802222, 151.286979);
@@ -77,6 +84,7 @@ public class MapsActivity extends FragmentActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
+        setTitle(getString(R.string.map_activity));
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
@@ -96,6 +104,15 @@ public class MapsActivity extends FragmentActivity
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
+
+        try {
+            boolean success = mMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(getContext(), R.raw.style_json));
+            if (!success) {
+                Log.e("MapsActivityRaw", "Style parsing failed.");
+            }
+        } catch (Resources.NotFoundException e) {
+            Log.e("MapsActivityRaw", "Can't find style.", e);
+        }
 
         //my location settings
         mMap.setOnMyLocationButtonClickListener(this);
@@ -133,17 +150,55 @@ public class MapsActivity extends FragmentActivity
         // setting bounds to map
         mMap.setLatLngBoundsForCameraTarget(MANLY_BOUNDS);
 
-        // function to pass coordinates to onMapPoints
+        // create all walks (eHills, corso, etc)
+        Walk eHills = readCsvCoord("EHHWv3.csv");
+        routes.put("Eastern Hills", eHills);
 
-        String eHillsFilename = "EHHWv3.csv";
-        Walk eHills = readCsvCoord(eHillsFilename);
-        parseCoord("Eastern Hills", eHills);
-
+        // create all landmarks (eHillsLand, etc)
         String landmarksTest = "LandmarksTestv4.csv";
         HashMap eHillsLand = readCsvLandmarks(landmarksTest);
-        parseCoord(eHillsLand);
+        walkLandmarks.add(eHillsLand);
 
+        // check to see which walk to display
+        Bundle data = getIntent().getExtras();
+        // if coming from MainActivity (therefore, id is not established)
+        String id = "100";
+        if (data != null) {
+            id = data.getString(MAP_ID);
+        }
+
+
+        String key;
+        switch (id) {
+            default: {
+                //plot all csv's; make loop to traverse routes
+                // for now, only eHills
+                HashMap<String, Landmark> allLandmarks = new HashMap<>();
+                int count = 0;
+                for (Object o : routes.entrySet()) {
+                    HashMap.Entry entry = (HashMap.Entry) o;
+                    parseCoord((Walk) entry.getValue());
+                    allLandmarks.putAll(walkLandmarks.get(count));
+                    count++;
+                }
+                parseCoord(allLandmarks);
+
+                break;
+            }
+            case "1": {
+                key = "Eastern Hills";
+                parseCoord(routes.get(key));
+                parseCoord(walkLandmarks.get(Integer.parseInt(id) - 1));
+                break;
+            }
+            case "2": {
+                Toast.makeText(this, "To be implemented", Toast.LENGTH_SHORT).show();
+                break;
+            }
+        }
         mMap.setOnInfoWindowClickListener(this);
+
+
 
         // function for onMapPoints
     }
@@ -191,11 +246,7 @@ public class MapsActivity extends FragmentActivity
         return walk;
     }
 
-    private void parseCoord (String name, Walk walk) {
-
-        //will implement loop for each walk
-        onMapPoints(name, walk);
-    }
+    private void parseCoord (Walk walk) { onMapPoints(walk); }
 
     private void parseCoord (HashMap landmarks) {
         plotLandmarks(landmarks);
@@ -203,8 +254,6 @@ public class MapsActivity extends FragmentActivity
 
     //plot landmarks on Map
     private void plotLandmarks(HashMap landmarks) {
-
-        walkLandmarks.add(landmarks);
 
         for (Object o : landmarks.entrySet()) {
             Map.Entry me = (Map.Entry) o;
@@ -218,14 +267,14 @@ public class MapsActivity extends FragmentActivity
 
     private MarkerOptions markerSetup (String n, Landmark l, MarkerOptions m) {
         m.position(l.getLatLng());
-        m.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
+        m.icon(BitmapDescriptorFactory.fromResource(R.drawable.arrow_4));
         m.title(l.getName());
         m.snippet(l.getSummary());
         return m;
     }
 
     //will implement overloaded onMapPoints function with parameters for waypoints
-    public void onMapPoints (String name, Walk walk) {
+    public void onMapPoints (Walk walk) {
 
         //limiter to how many walks are on the map
         if (routes.size() > 1) {
@@ -236,7 +285,7 @@ public class MapsActivity extends FragmentActivity
         //use Walk object arg
 
         //add Walk object to all routes/walks
-        routes.put(name,walk);
+        //routes.put(name,walk);
 
         //instantiate Marker options for start and end markers
         MarkerOptions startOpt = new MarkerOptions();
@@ -271,7 +320,6 @@ public class MapsActivity extends FragmentActivity
 
         }
 
-        //don't increment cCOUNT, should only be done ONCE at ParserTask when drawing polyline
         cCOUNT++;
     }
 
@@ -280,7 +328,7 @@ public class MapsActivity extends FragmentActivity
 
         switch (cCOUNT) {
             case 0:
-                markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE));
+                markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.flag_7));
                 break;
             case 1:
                 markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
