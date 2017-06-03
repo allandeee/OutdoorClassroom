@@ -19,9 +19,13 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.RadioGroup;
 import android.widget.Toast;
+import android.support.v7.widget.Toolbar;
+
 import com.google.android.gms.maps.model.MapStyleOptions;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -49,7 +53,7 @@ import java.util.Map;
 
 import static com.outdoorclassroom.App.getContext;
 
-public class MapsActivity extends FragmentActivity
+public class MapsActivity extends AppCompatActivity
         implements
         OnMapReadyCallback,
         OnMyLocationButtonClickListener,

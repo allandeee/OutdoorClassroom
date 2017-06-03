@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 //Toast.makeText(getBaseContext(), "Browser to be implemented", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.info:
-                Toast.makeText(getBaseContext(), "Database to be implemented", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(MainActivity.this, HelpActivity.class));
                 break;
             default:
                 Toast.makeText(getBaseContext(), "Please select one of the options", Toast.LENGTH_SHORT).show();
