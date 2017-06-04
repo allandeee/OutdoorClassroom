@@ -39,6 +39,7 @@ import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
+import com.opencsv.CSVReader;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -49,6 +50,7 @@ import java.net.URL;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 import static com.outdoorclassroom.App.getContext;
@@ -158,6 +160,9 @@ public class MapsActivity extends AppCompatActivity
         Walk eHills = readCsvCoord("EHHWv3.csv");
         routes.put("Eastern Hills", eHills);
 
+        Walk corso = readCsvCoord("corso.csv");
+        routes.put("Corso", corso);
+
         // create all landmarks (eHillsLand, etc)
         String landmarksTest = "LandmarksTestv4.csv";
         HashMap eHillsLand = readCsvLandmarks(landmarksTest);
@@ -179,10 +184,12 @@ public class MapsActivity extends AppCompatActivity
                 // for now, only eHills
                 HashMap<String, Landmark> allLandmarks = new HashMap<>();
                 int count = 0;
-                for (Object o : routes.entrySet()) {
-                    HashMap.Entry entry = (HashMap.Entry) o;
+                Iterator it = routes.entrySet().iterator();
+                while (it.hasNext()) {
+                    Map.Entry entry = (Map.Entry)it.next();
                     parseCoord((Walk) entry.getValue());
-                    allLandmarks.putAll(walkLandmarks.get(count));
+                    if (count < walkLandmarks.size())
+                        allLandmarks.putAll(walkLandmarks.get(count));
                     count++;
                 }
                 parseCoord(allLandmarks);
@@ -223,20 +230,20 @@ public class MapsActivity extends AppCompatActivity
                     new InputStreamReader(is, Charset.forName("UTF-8"))
             );
 
-            String line = "";
-            br.readLine();
+            //String line = "";
+            //br.readLine();
 
-            //for start and end
-            line = br.readLine();
-            String[] tokens = line.split(",");
+            CSVReader reader = new CSVReader(br);
+            reader.readNext(); //first line of titles
+
+            String [] tokens;
+            tokens = reader.readNext(); //for start and end
             LatLng start = new LatLng(Double.parseDouble(tokens[1]),Double.parseDouble(tokens[2]));
             walk.setStart(start);
 
             LatLng waypoint = MANLY_CENTRE;   // default value of Manly
 
-            while ( (line = br.readLine()) != null) {
-                tokens = line.split(",");
-
+            while ( (tokens = reader.readNext()) != null) {
                 waypoint = new LatLng(Double.parseDouble(tokens[1]),Double.parseDouble(tokens[2]));
                 walk.addWpt(waypoint);
             }
@@ -281,7 +288,7 @@ public class MapsActivity extends AppCompatActivity
     public void onMapPoints (Walk walk) {
 
         //limiter to how many walks are on the map
-        if (routes.size() > 1) {
+        if (routes.size() > 2) {
             routes.clear();
             mMap.clear();
         }
@@ -335,7 +342,7 @@ public class MapsActivity extends AppCompatActivity
                 markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.flag_7));
                 break;
             case 1:
-                markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
+                markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.flag_4));
                 break;
             case 2:
                 markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
