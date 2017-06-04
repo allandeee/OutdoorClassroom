@@ -48,6 +48,6 @@
         android:layout_margin="@dimen/fab_margin"
         app:layout_anchor="@+id/walk_detail_container"
         app:layout_anchorGravity="top|end"
-        app:srcCompat="@android:drawable/ic_dialog_map" />
+        app:srcCompat="@drawable/walk" />
 
 </android.support.design.widget.CoordinatorLayout>
