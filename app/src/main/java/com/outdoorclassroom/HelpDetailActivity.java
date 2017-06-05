@@ -2,6 +2,7 @@ package com.outdoorclassroom;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -20,12 +21,10 @@ public class HelpDetailActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_help_detail);
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.cust_tb);
+        setSupportActionBar(toolbar);
         setTitle(R.string.help_activity);
-        if(getSupportActionBar() != null){
-            Log.d("Logo check", "Reached");
-            getSupportActionBar().setIcon(R.drawable.logo);
-            getSupportActionBar().setDisplayUseLogoEnabled(true);
-        }
 
         qText = (TextView) findViewById(R.id.help_question);
         aText = (TextView) findViewById(R.id.help_answer);
