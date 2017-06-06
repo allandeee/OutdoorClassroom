@@ -13,12 +13,12 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
+        android:name=".App"
         android:allowBackup="true"
         android:icon="@drawable/logo"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme"
-        android:name=".App">
+        android:theme="@style/AppTheme.NoActionBar">
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -49,7 +49,7 @@
         <activity
             android:name=".WalkListActivity"
             android:label="@string/title_walk_list"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".WalkDetailActivity"
             android:label="@string/title_walk_detail"
@@ -59,6 +59,8 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.outdoorclassroom.WalkListActivity" />
         </activity>
+        <activity android:name=".HelpActivity" />
+        <activity android:name=".HelpDetailActivity"></activity>
     </application>
 
 </manifest>

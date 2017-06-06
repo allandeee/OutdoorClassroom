@@ -19,9 +19,16 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.widget.RadioGroup;
 import android.widget.Toast;
+import android.support.v7.widget.Toolbar;
+
 import com.google.android.gms.maps.model.MapStyleOptions;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -35,6 +42,7 @@ import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
+import com.opencsv.CSVReader;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -45,11 +53,12 @@ import java.net.URL;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 import static com.outdoorclassroom.App.getContext;
 
-public class MapsActivity extends FragmentActivity
+public class MapsActivity extends AppCompatActivity
         implements
         OnMapReadyCallback,
         OnMyLocationButtonClickListener,
@@ -74,7 +83,7 @@ public class MapsActivity extends FragmentActivity
     LatLng MANLY_CENTRE = new LatLng(-33.802222, 151.286979);
     // Constrain the camera target to Manly bounds
     LatLngBounds MANLY_BOUNDS = new LatLngBounds(
-            new LatLng(-33.823600, 151.262807), new LatLng(-33.782981, 151.309864)
+            new LatLng(-33.823213, 151.249588), new LatLng(-33.782981, 151.309864)
     );
 
     //Colour counter for markers and polylines
@@ -84,12 +93,34 @@ public class MapsActivity extends FragmentActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.cust_tb);
+        setSupportActionBar(toolbar);
         setTitle(getString(R.string.map_activity));
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu (Menu menu) {
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.action_bar, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected (MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_help:
+                startActivity(new Intent(MapsActivity.this, HelpActivity.class));
+                return true;
+            default:
+                Toast.makeText(getBaseContext(), "Invalid Input", Toast.LENGTH_SHORT).show();
+                return true;
+        }
     }
 
     /**
@@ -118,6 +149,9 @@ public class MapsActivity extends FragmentActivity
         mMap.setOnMyLocationButtonClickListener(this);
         enableMyLocation();
 
+        //zoom controls enabled
+        mMap.getUiSettings().setZoomControlsEnabled(true);
+
         /**
          * Implemented from
          * http://wptrafficanalyzer.in/blog/google-map-android-api-v2-switching-between-normal-view-satellite-view-and-terrain-view/
@@ -140,24 +174,52 @@ public class MapsActivity extends FragmentActivity
         });
 
 
-
-        // Add a marker in Sydney and move the camera
-        LatLng eHillHeritage = new LatLng(-33.802222, 151.286979);
-        //mMap.addMarker(new MarkerOptions().position(eHillHeritage).title("E Hill Heritage Walk"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(eHillHeritage, 15));
         mMap.setMinZoomPreference(14.0f);
         mMap.setMaxZoomPreference(20.0f);
         // setting bounds to map
         mMap.setLatLngBoundsForCameraTarget(MANLY_BOUNDS);
 
-        // create all walks (eHills, corso, etc)
-        Walk eHills = readCsvCoord("EHHWv3.csv");
-        routes.put("Eastern Hills", eHills);
+        /**
+         * This is where the walks plotted in the csv files are implemented into the app
+         * All that needs to be done is to pass the csv filename to the readCsvCoord() function
+         * to retrieve the resulting Walk object
+         * Be sure to have placed the csv file in the assets folder, and that the name is correct
+         * Then store the walk in the HashMap
+         */
+        if (routes.size() <= 4) {
+            Walk eHills = readCsvCoord("EHHWv3.csv");
+            routes.put("Eastern Hills", eHills);
 
-        // create all landmarks (eHillsLand, etc)
-        String landmarksTest = "LandmarksTestv4.csv";
-        HashMap eHillsLand = readCsvLandmarks(landmarksTest);
-        walkLandmarks.add(eHillsLand);
+            Walk corso = readCsvCoord("corso.csv");
+            routes.put("Corso", corso);
+
+            Walk pittwater = readCsvCoord("pittwater.csv");
+            routes.put("Pittwater Road", pittwater);
+
+            Walk manlyScenic = readCsvCoord("manly_scenic.csv");
+            routes.put("Manly Scenic", manlyScenic);
+        }
+
+        /**
+         * This is where the landmarks are created and stored
+         * Similar to how the walks are processed, all that is needed is to
+         * pass the csv filename containing the landmarks to the readCsvLandmarks() function
+         * This retrieves a HashMap containing all the landmarks (as per walk)
+         * Order here is important
+         */
+        if (walkLandmarks.size() <= 3) {
+            String landmarksTest = "LandmarksTestv4.csv";
+            HashMap eHillsLand = readCsvLandmarks(landmarksTest);
+            walkLandmarks.add(0,eHillsLand);
+
+            String corsoName = "corsoLand.csv";
+            HashMap corsoLand = readCsvLandmarks(corsoName);
+            walkLandmarks.add(1,corsoLand);
+
+            String pittName = "pittLand.csv";
+            HashMap pittLand = readCsvLandmarks(pittName);
+            walkLandmarks.add(2,pittLand);
+        }
 
         // check to see which walk to display
         Bundle data = getIntent().getExtras();
@@ -167,40 +229,62 @@ public class MapsActivity extends FragmentActivity
             id = data.getString(MAP_ID);
         }
 
-
+        /**
+         * This plots the walks and landmarks
+         */
         String key;
         switch (id) {
             default: {
                 //plot all csv's; make loop to traverse routes
-                // for now, only eHills
-                HashMap<String, Landmark> allLandmarks = new HashMap<>();
-                int count = 0;
-                for (Object o : routes.entrySet()) {
-                    HashMap.Entry entry = (HashMap.Entry) o;
+                Iterator it = routes.entrySet().iterator();
+                while (it.hasNext()) {
+                    HashMap.Entry entry = (HashMap.Entry)it.next();
                     parseCoord((Walk) entry.getValue());
-                    allLandmarks.putAll(walkLandmarks.get(count));
-                    count++;
+                }
+                HashMap<String, Landmark> allLandmarks = new HashMap<>();
+                for (int i=0;i<walkLandmarks.size();i++) {
+                    allLandmarks.putAll(walkLandmarks.get(i));
                 }
                 parseCoord(allLandmarks);
+                // Add a marker in Sydney and move the camera
+                LatLng eHillHeritage = new LatLng(-33.802222, 151.286979);
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(eHillHeritage, 15));
 
                 break;
             }
             case "1": {
                 key = "Eastern Hills";
-                parseCoord(routes.get(key));
+                Walk walk = routes.get(key);
+                parseCoord(walk);
                 parseCoord(walkLandmarks.get(Integer.parseInt(id) - 1));
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(walk.getStart(), 17));
                 break;
             }
             case "2": {
-                Toast.makeText(this, "To be implemented", Toast.LENGTH_SHORT).show();
+                key = "Corso";
+                Walk walk = routes.get(key);
+                parseCoord(walk);
+                parseCoord(walkLandmarks.get(Integer.parseInt(id) - 1));
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(walk.getStart(), 17));
                 break;
             }
+            case "3": {
+                key = "Pittwater Road";
+                Walk walk = routes.get(key);
+                parseCoord(walk);
+                parseCoord(walkLandmarks.get(Integer.parseInt(id) - 1));
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(walk.getStart(), 17));
+                break;
+            }
+            case "4": {
+                key = "Manly Scenic";
+                Walk walk = routes.get(key);
+                parseCoord(walk);
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(walk.getStart(), 17));
+            }
+
         }
         mMap.setOnInfoWindowClickListener(this);
-
-
-
-        // function for onMapPoints
     }
 
 
@@ -219,20 +303,20 @@ public class MapsActivity extends FragmentActivity
                     new InputStreamReader(is, Charset.forName("UTF-8"))
             );
 
-            String line = "";
-            br.readLine();
+            //String line = "";
+            //br.readLine();
 
-            //for start and end
-            line = br.readLine();
-            String[] tokens = line.split(",");
+            CSVReader reader = new CSVReader(br);
+            reader.readNext(); //first line of titles
+
+            String [] tokens;
+            tokens = reader.readNext(); //for start
             LatLng start = new LatLng(Double.parseDouble(tokens[1]),Double.parseDouble(tokens[2]));
             walk.setStart(start);
 
             LatLng waypoint = MANLY_CENTRE;   // default value of Manly
 
-            while ( (line = br.readLine()) != null) {
-                tokens = line.split(",");
-
+            while ( (tokens = reader.readNext()) != null) {
                 waypoint = new LatLng(Double.parseDouble(tokens[1]),Double.parseDouble(tokens[2]));
                 walk.addWpt(waypoint);
             }
@@ -276,11 +360,12 @@ public class MapsActivity extends FragmentActivity
     //will implement overloaded onMapPoints function with parameters for waypoints
     public void onMapPoints (Walk walk) {
 
-        //limiter to how many walks are on the map
-        if (routes.size() > 1) {
+        /*limiter to how many walks are on the map
+        if (routes.size() > 3) {
             routes.clear();
             mMap.clear();
         }
+        */
 
         //use Walk object arg
 
@@ -304,13 +389,6 @@ public class MapsActivity extends FragmentActivity
             /**
             LatLng origin = walk.getStart();
             LatLng dest = walk.getEnd();
-
-            //Getting URL to the Google Directions API
-            String url = getDirectionsUrl(origin,dest,walk);
-
-            //Download json data from Google Directions API
-            DownloadTask downloadTask = new DownloadTask();
-            downloadTask.execute(url);
              */
 
             PolylineOptions lineOptions = addPoints(walk);
@@ -331,13 +409,16 @@ public class MapsActivity extends FragmentActivity
                 markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.flag_7));
                 break;
             case 1:
-                markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
+                markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.flag_4));
                 break;
             case 2:
-                markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
+                markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.flag_6));
+                break;
+            case 3:
+                markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.flag_5));
                 break;
             default:
-                markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
+                markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.flag_8));
                 break;
         }
 
@@ -363,92 +444,23 @@ public class MapsActivity extends FragmentActivity
 
         switch (cCOUNT) {
             case 0:
-                lineOptions.color(Color.rgb(255,165,0));
+                lineOptions.color(Color.rgb(255,165,0));    //orange
                 break;
             case 1:
-                lineOptions.color(Color.BLUE);
+                lineOptions.color(Color.rgb(66, 134, 244)); //blue
                 break;
             case 2:
-                lineOptions.color(Color.GREEN);
+                lineOptions.color(Color.rgb(65, 244, 190)); //green
+                break;
+            case 3:
+                lineOptions.color(Color.rgb(244, 79, 65));  //red
                 break;
             default:
-                lineOptions.color(Color.RED);
+                lineOptions.color(Color.rgb(97, 65, 244));  //purple
                 break;
         }
 
         return lineOptions;
-    }
-
-    // never used, but may be used to open url connection and retrieve JSON data
-    private String downloadUrl(String strUrl) throws IOException {
-        String data = "";
-        InputStream iStream = null;
-        HttpURLConnection urlConnection = null;
-        try {
-            URL url = new URL(strUrl);
-            urlConnection = (HttpURLConnection) url.openConnection();
-            urlConnection.connect();
-            iStream = urlConnection.getInputStream();
-
-            BufferedReader br = new BufferedReader(new InputStreamReader(iStream));
-
-            StringBuffer sb = new StringBuffer();
-
-            String line = "";
-            while ((line = br.readLine()) != null) {
-                sb.append(line);
-            }
-
-            data = sb.toString();
-
-            br.close();
-        } catch (Exception e) {
-            Log.d("Exception", e.toString());
-        } finally {
-            iStream.close();
-            urlConnection.disconnect();
-        }
-
-        return data;
-    }
-
-    // never used, but may be used for retrieving directions
-    private String getDirectionsUrl (LatLng origin, LatLng dest, Walk walk) {
-
-        //string of origin and destination
-        String strOrigin = "origin=" + origin.latitude + "," + origin.longitude;
-        String strDest = "destination=" + dest.latitude + "," + dest.longitude;
-
-        //string for waypoints
-        if (!walk.wptsIsEmpty()) {
-            String strWpts = "waypoints=";
-
-            for (int i=0; i<walk.wptsSize(); i++) {
-                strWpts += "via:" + walk.getWpt(i).latitude + "," + walk.getWpt(i).longitude;
-
-                if ( (i+1) < walk.wptsSize() ) {
-                    strWpts += "|";
-                }
-            }
-
-            //concat waypoints to end of destination string (which is the end of origin/destination)
-            strDest += "&" + strWpts;
-        }
-
-        //Sensors and mode
-        //String sensor = "sensor=false";
-        String mode = "mode=walking";
-
-        //Output format
-        String output = "json";
-
-        //Build parameters for http request
-        String parameters = strOrigin + "&" + strDest + "&" + mode;
-
-        //building url http request
-        String url = "https://maps.googleapis.com/maps/api/directions/" + output + "?" + parameters;
-
-        return url;
     }
 
     /*
@@ -465,11 +477,11 @@ public class MapsActivity extends FragmentActivity
                     new InputStreamReader(is, Charset.forName("UTF-8"))
             );
 
-            String line = "";
-            br.readLine();  //skip first line containing headers
+            CSVReader reader = new CSVReader(br);
+            reader.readNext();  //skip first line containing headers
+            String [] tokens;
 
-            while ( (line = br.readLine()) != null) {
-                String[] tokens = line.split(",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)", -1);
+            while ( (tokens = reader.readNext()) != null) {
                 Landmark landmark = new Landmark(
                         tokens[0],
                         tokens[3],
@@ -525,7 +537,7 @@ public class MapsActivity extends FragmentActivity
 
     @Override
     public boolean onMyLocationButtonClick() {
-        Toast.makeText(this, "MyLocation button clicked", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Finding your location", Toast.LENGTH_SHORT).show();
         return false;
     }
 
@@ -549,15 +561,15 @@ public class MapsActivity extends FragmentActivity
 
     @Override
     public void onInfoWindowClick(Marker marker) {
-        Toast.makeText(this, marker.getTitle() + " clicked",
-                Toast.LENGTH_SHORT).show();
+        for (int i=0;i<walkLandmarks.size();i++) {
+            Landmark landmark = walkLandmarks.get(i).get(marker.getTitle());
+            if (landmark != null) {
+                Intent intent = new Intent(this, InfoActivity.class);
+                intent.putExtra(InfoActivity.LANDMARK, landmark);
+                startActivity(intent);
+            }
+        }
 
-        // will implement loop to search through array of hashmaps
-        Landmark landmark = (Landmark) walkLandmarks.get(0).get(marker.getTitle());
-
-        Intent intent = new Intent(this, InfoActivity.class);
-        intent.putExtra(InfoActivity.LANDMARK, landmark);
-        startActivity(intent);
 
     }
 
