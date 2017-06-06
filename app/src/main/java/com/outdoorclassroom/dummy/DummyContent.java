@@ -7,6 +7,7 @@ import android.content.res.AssetManager;
 import android.content.res.Resources;
 import android.util.Log;
 
+import com.opencsv.CSVReader;
 import com.outdoorclassroom.App;
 
 import java.io.BufferedReader;
@@ -51,7 +52,7 @@ public class DummyContent {
         // add 2 walks (manually)
         // to be changed to utilise a csv reader for class params
         //addItem(new DummyItem("1", "EHHW", "ehhw", "Default description"));
-        readCsvDesc("WalkDescriptionsTest.csv");
+        readCsvDesc("WalkDescriptions.csv");
     }
 
     public static void readCsvDesc (String filename) {
@@ -62,12 +63,12 @@ public class DummyContent {
                     new InputStreamReader(is, Charset.forName("UTF-8"))
             );
 
-            String line = "";
-            br.readLine();  //skip first line containing headers
+            CSVReader reader = new CSVReader(br);
+            reader.readNext();  //skip first line containing headers
+            String [] tokens;
             int countID = 1;
 
-            while ( (line = br.readLine()) != null) {
-                String[] tokens = line.split(",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)", -1);
+            while ( ( tokens = reader.readNext()) != null) {
                 addItem(new DummyItem(String.valueOf(countID), tokens[0], tokens[1], tokens[2]));
                 countID++;
             }

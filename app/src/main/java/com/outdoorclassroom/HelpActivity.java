@@ -57,9 +57,10 @@ public class HelpActivity extends AppCompatActivity {
                 extras.putString(HelpDetailActivity.Q_ID, questionAnswer.getQuestion());
                 extras.putString(HelpDetailActivity.A_ID, questionAnswer.getAnswer());
                 extras.putString(HelpDetailActivity.I_ID, questionAnswer.getImgName());
+                extras.putString(HelpDetailActivity.N_ID, questionAnswer.getNav());
                 intent.putExtras(extras);
                 startActivity(intent);
-                Toast.makeText(getApplicationContext(), questionAnswer.getQuestion() + " is selected!", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getApplicationContext(), questionAnswer.getQuestion() + " is selected!", Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -87,7 +88,7 @@ public class HelpActivity extends AppCompatActivity {
 
             while ((tokens = reader.readNext()) != null) {
                 questionAnswers.add(
-                        new QuestionAnswer(tokens[0],tokens[1],tokens[2])
+                        new QuestionAnswer(tokens[0],tokens[1],tokens[2],tokens[3])
                 );
             }
             quAnAdapter.notifyDataSetChanged();

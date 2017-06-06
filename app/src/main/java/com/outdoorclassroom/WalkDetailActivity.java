@@ -37,8 +37,6 @@ public class WalkDetailActivity extends AppCompatActivity {
                 Intent intent = new Intent(WalkDetailActivity.this, MapsActivity.class);
                 intent.putExtra(MapsActivity.MAP_ID, str);
                 startActivity(intent);
-                Snackbar.make(view, "Replace with your own detail action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
             }
         });
 
