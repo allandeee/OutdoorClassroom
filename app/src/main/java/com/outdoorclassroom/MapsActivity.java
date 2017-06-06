@@ -149,6 +149,9 @@ public class MapsActivity extends AppCompatActivity
         mMap.setOnMyLocationButtonClickListener(this);
         enableMyLocation();
 
+        //zoom controls enabled
+        mMap.getUiSettings().setZoomControlsEnabled(true);
+
         /**
          * Implemented from
          * http://wptrafficanalyzer.in/blog/google-map-android-api-v2-switching-between-normal-view-satellite-view-and-terrain-view/
