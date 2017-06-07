@@ -210,8 +210,8 @@ public class MapsActivity extends AppCompatActivity
          * This retrieves a HashMap containing all the landmarks (as per walk)
          * Order here is important
          */
-        if (walkLandmarks.size() <= 4) {
-            String landmarksTest = "LandmarksTestv4.csv";
+        if (walkLandmarks.size() <= 6) {
+            String landmarksTest = "ehLand.csv";
             HashMap<String, Landmark> eHillsLand = readCsvLandmarks(landmarksTest);
             walkLandmarks.add(0,eHillsLand);
 
@@ -229,6 +229,10 @@ public class MapsActivity extends AppCompatActivity
             String heartName = "heartLand.csv";
             HashMap<String, Landmark> heartLand = readCsvLandmarks(heartName);
             walkLandmarks.add(4, heartLand);
+
+            String plaquesName = "plaquesLand.csv";
+            HashMap<String, Landmark> plaquesLand = readCsvLandmarks(plaquesName);
+            walkLandmarks.add(5, plaquesLand);
         }
 
         // check to see which walk to display
@@ -259,7 +263,6 @@ public class MapsActivity extends AppCompatActivity
                 // Add a marker in Sydney and move the camera
                 LatLng eHillHeritage = new LatLng(-33.802222, 151.286979);
                 mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(eHillHeritage, 15));
-
                 break;
             }
             case "1": {
@@ -415,7 +418,6 @@ public class MapsActivity extends AppCompatActivity
             mMap.addPolyline(lineOptions);
 
         }
-
         cCOUNT++;
     }
 
