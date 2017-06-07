@@ -2,8 +2,11 @@ package com.outdoorclassroom;
 
 /**
  * Ctrl-F following index points to find methods for each implementation
- * I-01: Plot the Walk
- * I-02: Plot the Landmarks
+ * I-01: Function to Plot the Walk
+ * I-02: Function to Plot the Landmarks
+ * I-03: Instantiation of Walk
+ * I-04: Instantiation of Landmark
+ * I-05: Call to Plotting functions
  * I-UP: User Permissions
  */
 
@@ -180,13 +183,14 @@ public class MapsActivity extends AppCompatActivity
         mMap.setLatLngBoundsForCameraTarget(MANLY_BOUNDS);
 
         /**
+         * I-03
          * This is where the walks plotted in the csv files are implemented into the app
          * All that needs to be done is to pass the csv filename to the readCsvCoord() function
          * to retrieve the resulting Walk object
          * Be sure to have placed the csv file in the assets folder, and that the name is correct
          * Then store the walk in the HashMap
          */
-        if (routes.size() <= 5) {
+        if (routes.size() <= 5) {   //increase this number for every walk implemented
             Walk eHills = readCsvCoord("EHHWv3.csv");
             routes.put("Eastern Hills", eHills);
 
@@ -204,13 +208,14 @@ public class MapsActivity extends AppCompatActivity
         }
 
         /**
+         * I-04
          * This is where the landmarks are created and stored
          * Similar to how the walks are processed, all that is needed is to
          * pass the csv filename containing the landmarks to the readCsvLandmarks() function
          * This retrieves a HashMap containing all the landmarks (as per walk)
          * Order here is important
          */
-        if (walkLandmarks.size() <= 6) {
+        if (walkLandmarks.size() <= 6) {    //increase this number for every landmarks hashmap implemented
             String landmarksTest = "ehLand.csv";
             HashMap<String, Landmark> eHillsLand = readCsvLandmarks(landmarksTest);
             walkLandmarks.add(0,eHillsLand);
@@ -244,7 +249,12 @@ public class MapsActivity extends AppCompatActivity
         }
 
         /**
+         * I-05
          * This plots the walks and landmarks
+         * Based on where this acitvity is called from, will determine which walks will display
+         * By default, all walks are displayed.
+         * If a cetrain walk is selected from the WalkListActivity and WalkDetailActivity,
+         * then that walk will be isolated and displayed on the map.
          */
         String key;
         switch (id) {
