@@ -186,7 +186,7 @@ public class MapsActivity extends AppCompatActivity
          * Be sure to have placed the csv file in the assets folder, and that the name is correct
          * Then store the walk in the HashMap
          */
-        if (routes.size() <= 4) {
+        if (routes.size() <= 5) {
             Walk eHills = readCsvCoord("EHHWv3.csv");
             routes.put("Eastern Hills", eHills);
 
@@ -198,6 +198,9 @@ public class MapsActivity extends AppCompatActivity
 
             Walk manlyScenic = readCsvCoord("manly_scenic.csv");
             routes.put("Manly Scenic", manlyScenic);
+
+            Walk heart = readCsvCoord("heart.csv");
+            routes.put("Heart of Manly", heart);
         }
 
         /**
@@ -207,18 +210,25 @@ public class MapsActivity extends AppCompatActivity
          * This retrieves a HashMap containing all the landmarks (as per walk)
          * Order here is important
          */
-        if (walkLandmarks.size() <= 3) {
+        if (walkLandmarks.size() <= 4) {
             String landmarksTest = "LandmarksTestv4.csv";
-            HashMap eHillsLand = readCsvLandmarks(landmarksTest);
+            HashMap<String, Landmark> eHillsLand = readCsvLandmarks(landmarksTest);
             walkLandmarks.add(0,eHillsLand);
 
             String corsoName = "corsoLand.csv";
-            HashMap corsoLand = readCsvLandmarks(corsoName);
+            HashMap<String, Landmark> corsoLand = readCsvLandmarks(corsoName);
             walkLandmarks.add(1,corsoLand);
 
             String pittName = "pittLand.csv";
-            HashMap pittLand = readCsvLandmarks(pittName);
+            HashMap<String, Landmark> pittLand = readCsvLandmarks(pittName);
             walkLandmarks.add(2,pittLand);
+
+            HashMap<String, Landmark> scenic = new HashMap<>(); //empty list
+            walkLandmarks.add(3,scenic);
+
+            String heartName = "heartLand.csv";
+            HashMap<String, Landmark> heartLand = readCsvLandmarks(heartName);
+            walkLandmarks.add(4, heartLand);
         }
 
         // check to see which walk to display
@@ -257,7 +267,7 @@ public class MapsActivity extends AppCompatActivity
                 Walk walk = routes.get(key);
                 parseCoord(walk);
                 parseCoord(walkLandmarks.get(Integer.parseInt(id) - 1));
-                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(walk.getStart(), 17));
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(walk.getStart(), 18));
                 break;
             }
             case "2": {
@@ -265,7 +275,7 @@ public class MapsActivity extends AppCompatActivity
                 Walk walk = routes.get(key);
                 parseCoord(walk);
                 parseCoord(walkLandmarks.get(Integer.parseInt(id) - 1));
-                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(walk.getStart(), 17));
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(walk.getStart(), 18));
                 break;
             }
             case "3": {
@@ -273,14 +283,22 @@ public class MapsActivity extends AppCompatActivity
                 Walk walk = routes.get(key);
                 parseCoord(walk);
                 parseCoord(walkLandmarks.get(Integer.parseInt(id) - 1));
-                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(walk.getStart(), 17));
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(walk.getStart(), 18));
                 break;
             }
             case "4": {
                 key = "Manly Scenic";
                 Walk walk = routes.get(key);
                 parseCoord(walk);
-                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(walk.getStart(), 17));
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(walk.getStart(), 18));
+            }
+            case "5": {
+                key = "Heart of Manly";
+                Walk walk = routes.get(key);
+                parseCoord(walk);
+                parseCoord(walkLandmarks.get(Integer.parseInt(id) - 1));
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(walk.getStart(), 18));
+                break;
             }
 
         }
@@ -467,7 +485,7 @@ public class MapsActivity extends AppCompatActivity
     I-02: Following methods implement the PLOT THE LANDMARKS requirement
      */
 
-    public HashMap readCsvLandmarks (String filename) {
+    public HashMap<String, Landmark> readCsvLandmarks (String filename) {
         HashMap<String, Landmark> landmarks = new HashMap<>();
 
         try {

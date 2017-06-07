@@ -3,15 +3,6 @@
 
     <item
         is-multidex="false"
-        jar="C:\Users\Allan\.android\build-cache\df09377a71af021d03477090722ec322db057357\output\jars\classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="25.0.3"
-        sha1="95519720620b553f63afc789beba9ad582807f7c">
-        <dex dex="C:\Users\Allan\AndroidStudioProjects\OutdoorClassroom\app\build\intermediates\pre-dexed\debug\classes_92e32b234827b0bd3c3a0ac32706690b27bd08b4.jar" />
-    </item>
-    <item
-        is-multidex="false"
         jar="C:\Users\Allan\.android\build-cache\edfa56a2d5357d69187b61392627fcbdb1bad72a\output\jars\classes.jar"
         jumboMode="false"
         optimize="true"
@@ -21,21 +12,30 @@
     </item>
     <item
         is-multidex="false"
-        jar="C:\Users\Allan\AndroidStudioProjects\OutdoorClassroom\opencsv-3.9\opencsv-3.9.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="25.0.3"
-        sha1="01e0df53c5ef2431f072d1da3fd31bea9da5b529">
-        <dex dex="C:\Users\Allan\AndroidStudioProjects\OutdoorClassroom\app\build\intermediates\pre-dexed\debug\opencsv-3.9_393a4619be3584b60eaf819c9ee4b522b8740c35.jar" />
-    </item>
-    <item
-        is-multidex="false"
         jar="C:\Users\Allan\.android\build-cache\b8f6967525b60810ba5ee4cfb3e3b71a0f6a6aa3\output\jars\classes.jar"
         jumboMode="false"
         optimize="true"
         revision="25.0.3"
         sha1="d4cf6227dd6a2ceff0f7dcf0c324380b7abf2c28">
         <dex dex="C:\Users\Allan\AndroidStudioProjects\OutdoorClassroom\app\build\intermediates\pre-dexed\debug\classes_2a1136b293fb368da5629aa850c0cfdb178a63fa.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\Allan\.android\build-cache\df09377a71af021d03477090722ec322db057357\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="95519720620b553f63afc789beba9ad582807f7c">
+        <dex dex="C:\Users\Allan\AndroidStudioProjects\OutdoorClassroom\app\build\intermediates\pre-dexed\debug\classes_92e32b234827b0bd3c3a0ac32706690b27bd08b4.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\Allan\AndroidStudioProjects\OutdoorClassroom\opencsv-3.9\opencsv-3.9.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="01e0df53c5ef2431f072d1da3fd31bea9da5b529">
+        <dex dex="C:\Users\Allan\AndroidStudioProjects\OutdoorClassroom\app\build\intermediates\pre-dexed\debug\opencsv-3.9_393a4619be3584b60eaf819c9ee4b522b8740c35.jar" />
     </item>
 
 </items>
