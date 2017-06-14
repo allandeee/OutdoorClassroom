@@ -14,6 +14,7 @@
     <string name="rb_terrain">Terrain</string>
 
     <!--About Us-->
+    <string name="about">About the Developers</string>
     <string-array name="details">
         <item>Developed by:</item>
         <item>Macquarie University</item>
@@ -23,6 +24,10 @@
     <string-array name="developers">
         <item>Allan Dominguez</item>
         <item>Hugo de Vries</item>
+        <item>Go Uragami</item>
+        <item>Hao Ye</item>
+        <item>Jackson Cheung</item>
+        <item>Jiaqin Cai</item>
     </string-array>
 
     <!--Titles-->
