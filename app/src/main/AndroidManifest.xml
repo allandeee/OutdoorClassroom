@@ -60,7 +60,8 @@
                 android:value="com.outdoorclassroom.WalkListActivity" />
         </activity>
         <activity android:name=".HelpActivity" />
-        <activity android:name=".HelpDetailActivity"></activity>
+        <activity android:name=".HelpDetailActivity" />
+        <activity android:name=".AboutActivity"></activity>
     </application>
 
 </manifest>

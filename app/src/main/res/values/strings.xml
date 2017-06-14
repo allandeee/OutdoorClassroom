@@ -13,6 +13,18 @@
     <string name="rb_satellite">Satellite</string>
     <string name="rb_terrain">Terrain</string>
 
+    <!--About Us-->
+    <string-array name="details">
+        <item>Developed by:</item>
+        <item>Macquarie University</item>
+        <item>ISYS358 S1 2017</item>
+        <item><b>Group 16</b></item>
+    </string-array>
+    <string-array name="developers">
+        <item>Allan Dominguez</item>
+        <item>Hugo de Vries</item>
+    </string-array>
+
     <!--Titles-->
     <string name="map_activity">Manly Map</string>
     <string name="info_activity">Landmark Info</string>

@@ -51,16 +51,21 @@ public class HelpActivity extends AppCompatActivity {
         recyclerView.addOnItemTouchListener(new RecyclerTouchListener(getApplicationContext(), recyclerView, new RecyclerTouchListener.ClickListener() {
             @Override
             public void onClick(View view, int position) {
-                QuestionAnswer questionAnswer = questionAnswers.get(position);
-                Intent intent = new Intent(HelpActivity.this, HelpDetailActivity.class);
-                Bundle extras = new Bundle();
-                extras.putString(HelpDetailActivity.Q_ID, questionAnswer.getQuestion());
-                extras.putString(HelpDetailActivity.A_ID, questionAnswer.getAnswer());
-                extras.putString(HelpDetailActivity.I_ID, questionAnswer.getImgName());
-                extras.putString(HelpDetailActivity.N_ID, questionAnswer.getNav());
-                intent.putExtras(extras);
-                startActivity(intent);
-                //Toast.makeText(getApplicationContext(), questionAnswer.getQuestion() + " is selected!", Toast.LENGTH_SHORT).show();
+                if (position == 5) {
+                    startActivity(new Intent(HelpActivity.this, AboutActivity.class));
+                }
+                else {
+                    QuestionAnswer questionAnswer = questionAnswers.get(position);
+                    Intent intent = new Intent(HelpActivity.this, HelpDetailActivity.class);
+                    Bundle extras = new Bundle();
+                    extras.putString(HelpDetailActivity.Q_ID, questionAnswer.getQuestion());
+                    extras.putString(HelpDetailActivity.A_ID, questionAnswer.getAnswer());
+                    extras.putString(HelpDetailActivity.I_ID, questionAnswer.getImgName());
+                    extras.putString(HelpDetailActivity.N_ID, questionAnswer.getNav());
+                    intent.putExtras(extras);
+                    startActivity(intent);
+                    //Toast.makeText(getApplicationContext(), questionAnswer.getQuestion() + " is selected!", Toast.LENGTH_SHORT).show();
+                }
             }
 
             @Override
