@@ -126,5 +126,6 @@
     <orderEntry type="library" exported="" name="support-fragment-25.3.1" level="project" />
     <orderEntry type="library" exported="" name="animated-vector-drawable-25.3.1" level="project" />
     <orderEntry type="module" module-name="opencsv-3.9" exported="" />
+    <orderEntry type="library" exported="" name="android-android-25" level="project" />
   </component>
 </module>
